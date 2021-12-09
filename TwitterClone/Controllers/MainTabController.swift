@@ -31,7 +31,7 @@ class MainTabController: UITabBarController {
                                                                 rootViewController: ExploreController())
         let notificationsNavController = templateNavigationController(image: Constants.notificationsImage,
                                                                       rootViewController: NotificationsController())
-        let conversationsNavController = templateNavigationController(image: UIImage(named: "home_unselected"),
+        let conversationsNavController = templateNavigationController(image: Constants.feedImage,
                                                                       rootViewController: ConversationsController())
         viewControllers = [feedNavController,
                            exploreNavController,
@@ -60,7 +60,7 @@ extension MainTabController {
         navigationController.navigationBar.scrollEdgeAppearance = appearance
         navigationController.navigationBar.backgroundColor = .white
         navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-        navigationController.navigationBar.prefersLargeTitles = true
+//        navigationController.navigationBar.prefersLargeTitles = true
         
         return navigationController
     }
