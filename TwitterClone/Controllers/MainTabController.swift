@@ -10,16 +10,36 @@ import UIKit
 class MainTabController: UITabBarController {
     
     // MARK: - Properties
-    
+    private(set) lazy var actionButton: UIButton = {
+        let actionButton = UIButton(type: .system)
+        actionButton.configuration = .blueStickyButton()
+        actionButton.frame = CGRect(x: 0, y: 0, width: 56, height: 56)
+        actionButton.clipsToBounds = true
+        actionButton.layer.cornerRadius = actionButton.frame.size.width / 2
+        //        actionButton.addTarget(self, action: <#T##Selector#>, for: .touchUpInside)
+        return actionButton
+    }()
     
     // MARK: - ViewController Lifecycle
+    
+    override func loadView() {
+        super.loadView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewControllers()
-      
+        configureUI()
+        
     }
     
     // MARK: - Helpers
+    
+    private func configureUI() {
+        view.addSubview(actionButton)
+        
+        actionButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingBottom: 64, paddingRight: 16, width: 56, height: 56)
+    }
     
     func configureViewControllers() {
         // TabBar appearance
@@ -60,7 +80,7 @@ extension MainTabController {
         navigationController.navigationBar.scrollEdgeAppearance = appearance
         navigationController.navigationBar.backgroundColor = .white
         navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-//        navigationController.navigationBar.prefersLargeTitles = true
+        //        navigationController.navigationBar.prefersLargeTitles = true
         
         return navigationController
     }

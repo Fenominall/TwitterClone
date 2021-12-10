@@ -12,6 +12,9 @@
 		4F4D9455275D12FB00650A93 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F4D9454275D12FB00650A93 /* Assets.xcassets */; };
 		4F4D9458275D12FB00650A93 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F4D9456275D12FB00650A93 /* LaunchScreen.storyboard */; };
 		4F4D9467275D13FB00650A93 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4D9466275D13FB00650A93 /* MainTabController.swift */; };
+		4F62C77B2763E77B00E08809 /* MainTabBarControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F62C77A2763E77B00E08809 /* MainTabBarControllerView.swift */; };
+		4F62C77E2763E8C900E08809 /* UIButtonConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F62C77D2763E8C900E08809 /* UIButtonConfigurationExtension.swift */; };
+		4F62C7802763F1A200E08809 /* NSConstraintsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F62C77F2763F1A200E08809 /* NSConstraintsExtension.swift */; };
 		4FB7F64D275D4FD0008F7AB7 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F64C275D4FD0008F7AB7 /* FeedController.swift */; };
 		4FB7F64F275D501B008F7AB7 /* ExploreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F64E275D501B008F7AB7 /* ExploreController.swift */; };
 		4FB7F651275D5049008F7AB7 /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F650275D5049008F7AB7 /* NotificationsController.swift */; };
@@ -27,6 +30,9 @@
 		4F4D9457275D12FB00650A93 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4F4D9459275D12FB00650A93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F4D9466275D13FB00650A93 /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
+		4F62C77A2763E77B00E08809 /* MainTabBarControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarControllerView.swift; sourceTree = "<group>"; };
+		4F62C77D2763E8C900E08809 /* UIButtonConfigurationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonConfigurationExtension.swift; sourceTree = "<group>"; };
+		4F62C77F2763F1A200E08809 /* NSConstraintsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSConstraintsExtension.swift; sourceTree = "<group>"; };
 		4FB7F64C275D4FD0008F7AB7 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
 		4FB7F64E275D501B008F7AB7 /* ExploreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreController.swift; sourceTree = "<group>"; };
 		4FB7F650275D5049008F7AB7 /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
@@ -64,6 +70,7 @@
 		4F4D944A275D12F900650A93 /* TwitterClone */ = {
 			isa = PBXGroup;
 			children = (
+				4F62C77C2763E8B300E08809 /* Extensions */,
 				4FB7F654275D532F008F7AB7 /* Constants */,
 				4F4D9460275D133400650A93 /* API */,
 				4F4D9468275D14CE00650A93 /* Application */,
@@ -107,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				4F4D9456275D12FB00650A93 /* LaunchScreen.storyboard */,
+				4F62C77A2763E77B00E08809 /* MainTabBarControllerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -141,6 +149,15 @@
 				4F4D9459275D12FB00650A93 /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		4F62C77C2763E8B300E08809 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4F62C77D2763E8C900E08809 /* UIButtonConfigurationExtension.swift */,
+				4F62C77F2763F1A200E08809 /* NSConstraintsExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		4FB7F654275D532F008F7AB7 /* Constants */ = {
@@ -225,9 +242,12 @@
 				4FB7F653275D506D008F7AB7 /* ConversationsController.swift in Sources */,
 				4F4D944C275D12F900650A93 /* AppDelegate.swift in Sources */,
 				4FB7F64F275D501B008F7AB7 /* ExploreController.swift in Sources */,
+				4F62C77E2763E8C900E08809 /* UIButtonConfigurationExtension.swift in Sources */,
 				4F4D9467275D13FB00650A93 /* MainTabController.swift in Sources */,
 				4F4D944E275D12F900650A93 /* SceneDelegate.swift in Sources */,
 				4FB7F64D275D4FD0008F7AB7 /* FeedController.swift in Sources */,
+				4F62C77B2763E77B00E08809 /* MainTabBarControllerView.swift in Sources */,
+				4F62C7802763F1A200E08809 /* NSConstraintsExtension.swift in Sources */,
 				4FB7F656275D533D008F7AB7 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
