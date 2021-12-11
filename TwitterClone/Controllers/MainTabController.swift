@@ -16,7 +16,7 @@ class MainTabController: UITabBarController {
         actionButton.frame = CGRect(x: 0, y: 0, width: 56, height: 56)
         actionButton.clipsToBounds = true
         actionButton.layer.cornerRadius = actionButton.frame.size.width / 2
-        //        actionButton.addTarget(self, action: <#T##Selector#>, for: .touchUpInside)
+        actionButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
         return actionButton
     }()
     
@@ -31,6 +31,11 @@ class MainTabController: UITabBarController {
         configureViewControllers()
         configureUI()
         
+    }
+    
+    // MARK: - Selectors
+    @objc func actionButtonTapped() {
+        print("Test")
     }
     
     // MARK: - Helpers
