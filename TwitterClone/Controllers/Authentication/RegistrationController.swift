@@ -11,6 +11,9 @@ import UIKit
 class RegistrationController: UIViewController {
     
     // MARK: - Properties
+    
+    private lazy var imagePicker = UIImagePickerController()
+    
     private lazy var plusButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(Constants.plusPhoto, for: .normal)
@@ -105,7 +108,7 @@ class RegistrationController: UIViewController {
     }
     
     @objc func addProfilePhoto() {
-        
+        present(imagePicker, animated: true, completion: nil)
     }
     
     // MARK: - Helpers
@@ -113,6 +116,9 @@ class RegistrationController: UIViewController {
         view.backgroundColor = .twitterBlue
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.isHidden = true
+        
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
         
         view.addSubview(plusButton)
         plusButton.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
@@ -133,6 +139,22 @@ class RegistrationController: UIViewController {
         
         
     }
-    
-    
+}
+
+extension RegistrationController:  UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let imageProvider = info[.editedImage] as? UIImage else { return }
+        self.plusButton.setImage(imageProvider.withRenderingMode(.alwaysOriginal),
+                                 for: .normal)
+        
+        // Picked Image configurations
+        plusButton.layer.cornerRadius = 128 / 2
+        plusButton.layer.masksToBounds = true
+        plusButton.imageView?.clipsToBounds = true
+        plusButton.imageView?.contentMode = .scaleAspectFill
+        plusButton.layer.borderWidth = 3
+        plusButton.layer.borderColor = UIColor.white.cgColor
+
+        dismiss(animated: true, completion: nil)
+    }
 }
