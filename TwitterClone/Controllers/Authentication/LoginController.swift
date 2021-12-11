@@ -77,7 +77,8 @@ class LoginController: UIViewController {
     }
     
     @objc func handleShowSignUp() {
-        
+        let regController = RegistrationController()
+        navigationController?.pushViewController(regController, animated: true)
     }
     
     // MARK: - Helpers
