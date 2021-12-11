@@ -11,7 +11,7 @@ import UIKit
 class RegistrationController: UIViewController {
     
     // MARK: - Properties
-    // test
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
