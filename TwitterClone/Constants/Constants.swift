@@ -16,4 +16,8 @@ public struct Constants {
     static let twitterImageBlue = UIImage(named: "twitter_logo_blue")
     static let newTweet = UIImage(named: "new_tweet")
     static let twitterLogo = UIImage(named: "TwitterLogo")
+    static let mail = UIImage(named: "mail")?.withRenderingMode(.alwaysOriginal)
+    static let lock = UIImage(named: "ic_lock_outline_white_2x")?.withRenderingMode(.alwaysOriginal)
+    
+    
 }

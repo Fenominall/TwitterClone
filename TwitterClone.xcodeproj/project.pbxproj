@@ -17,6 +17,7 @@
 		4F86DC7F27649B47004FFB5A /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F86DC7E27649B47004FFB5A /* AppColors.swift */; };
 		4F86DC8227649DB9004FFB5A /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F86DC8127649DB9004FFB5A /* LoginController.swift */; };
 		4F86DC8427649DF0004FFB5A /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F86DC8327649DF0004FFB5A /* RegistrationController.swift */; };
+		4FB35AB92764B4110021F277 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB35AB82764B4110021F277 /* Utilities.swift */; };
 		4FB7F64D275D4FD0008F7AB7 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F64C275D4FD0008F7AB7 /* FeedController.swift */; };
 		4FB7F64F275D501B008F7AB7 /* ExploreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F64E275D501B008F7AB7 /* ExploreController.swift */; };
 		4FB7F651275D5049008F7AB7 /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F650275D5049008F7AB7 /* NotificationsController.swift */; };
@@ -37,6 +38,7 @@
 		4F86DC7E27649B47004FFB5A /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		4F86DC8127649DB9004FFB5A /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		4F86DC8327649DF0004FFB5A /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
+		4FB35AB82764B4110021F277 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		4FB7F64C275D4FD0008F7AB7 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
 		4FB7F64E275D501B008F7AB7 /* ExploreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreController.swift; sourceTree = "<group>"; };
 		4FB7F650275D5049008F7AB7 /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				4F62C77D2763E8C900E08809 /* UIButtonConfigurationExtension.swift */,
 				4F62C77F2763F1A200E08809 /* NSConstraintsExtension.swift */,
 				4F86DC7E27649B47004FFB5A /* AppColors.swift */,
+				4FB35AB82764B4110021F277 /* Utilities.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 			files = (
 				4F86DC8427649DF0004FFB5A /* RegistrationController.swift in Sources */,
 				4FB7F651275D5049008F7AB7 /* NotificationsController.swift in Sources */,
+				4FB35AB92764B4110021F277 /* Utilities.swift in Sources */,
 				4F86DC8227649DB9004FFB5A /* LoginController.swift in Sources */,
 				4FB7F653275D506D008F7AB7 /* ConversationsController.swift in Sources */,
 				4F4D944C275D12F900650A93 /* AppDelegate.swift in Sources */,
