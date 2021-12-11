@@ -13,6 +13,7 @@ public struct Constants {
     static let exploreImage = UIImage(named: "search_unselected")
     static let notificationsImage = UIImage(named: "like_unselected")
     static let feedImage = UIImage(named: "ic_mail_outline_white_2x-1")
-    static let twitterImage = UIImage(named: "twitter_logo_blue")
+    static let twitterImageBlue = UIImage(named: "twitter_logo_blue")
     static let newTweet = UIImage(named: "new_tweet")
+    static let twitterLogo = UIImage(named: "TwitterLogo")
 }
