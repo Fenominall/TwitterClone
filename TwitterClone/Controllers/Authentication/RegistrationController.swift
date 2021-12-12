@@ -7,21 +7,18 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class RegistrationController: UIViewController {
     
     // MARK: - Properties
     
+    
+    // Picking an image for userProfile
     private lazy var imagePicker = UIImagePickerController()
+    private var profileImage: UIImage?
     
-    private lazy var plusButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(Constants.plusPhoto, for: .normal)
-        button.tintColor = .white
-        button.addTarget(self, action: #selector(addProfilePhoto), for: .touchUpInside)
-        return button
-    }()
-    
+    // UIViews
     private lazy var emailContainerView: UIView = {
         let emailContainer = Utilities().inputContainerView(withImage: Constants.mail!, textField: emailTextField)
         return emailContainer
@@ -42,6 +39,7 @@ class RegistrationController: UIViewController {
         return container
     }()
     
+    // TextFields
     private lazy var emailTextField: UITextField = {
         let emailTextField = Utilities().customTextField(withPlaceholder: "Email")
         return emailTextField
@@ -63,6 +61,16 @@ class RegistrationController: UIViewController {
         return textField
     }()
     
+    // Buttons
+    private lazy var plusButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(Constants.plusPhoto, for: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(addProfilePhoto), for: .touchUpInside)
+        return button
+    }()
+    
+    
     private lazy var registrationButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
@@ -71,10 +79,17 @@ class RegistrationController: UIViewController {
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.addTarget(self, action: #selector(handleRegisterAcctountAction), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleRegisterAccountAction), for: .touchUpInside)
         return button
     }()
     
+    private let loginToAccountButton: UIButton = {
+        let button = Utilities().attributedButton("Already have an account?", " Log In")
+        button.addTarget(self, action: #selector(handleShowLogIn), for: .touchUpInside)
+        return button
+    }()
+    
+    // Stack of all configured UIElements on the Registration Screen
     private lazy var stackOfUI: UIStackView = {
         let stackOfUI = UIStackView(arrangedSubviews: [emailContainerView,
                                                        passwordContainerView,
@@ -87,12 +102,6 @@ class RegistrationController: UIViewController {
         return stackOfUI
     }()
     
-    private let loginToAccountButton: UIButton = {
-        let button = Utilities().attributedButton("Already have an account?", " Log In")
-        button.addTarget(self, action: #selector(handleShowLogIn), for: .touchUpInside)
-        return button
-    }()
-    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,8 +112,56 @@ class RegistrationController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func handleRegisterAcctountAction() {
+    @objc func handleRegisterAccountAction() {
+        // Getting data from the user`s input
+        guard let profileImage = profileImage else {
+            print("DEBUG: Please select a profile image...")
+            return
+        }
+        guard let email = emailTextField.text?.lowercased(),
+              let password = passwordTextField.text,
+              let fullName = fullNameTextField.text,
+              let username = usernameTextField.text else { return }
+        print("You are here with \(email) and \(password)")
         
+        // Converting an uploaded image into data and
+        // compressing an image quality
+        guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
+        // Generating unique UUID for each uploaded image
+        let fileName = NSUUID().uuidString
+        // Referencing the place for created storage
+        let storageRef = STORAGE_PROFILE_IMAGES.child(fileName)
+        // Uploading image data to the provided storage reference
+        storageRef.putData(imageData, metadata: nil) { (meta, error) in
+            print("data put")
+            // Getting downloaded url for an image, storage url is gonna be stored in the database structure
+            storageRef.downloadURL { (url, error) in
+                guard let profileImageUrl = url?.absoluteString else {
+                    print("URL is missing \(String(describing: error))")
+                    return }
+                print("Got url")
+                
+                // Firebase authentication creating a user
+                Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+                    if let error = error {
+                        print("DEBUG THE ERROR: \(error.localizedDescription)")
+                        return
+                    }
+                    // UID asks to come data back for the result in Auth call
+                    guard let uid = result?.user.uid else { return }
+                    // Dictionary with values to register the user
+                    let values = ["email": email,
+                                  "username": username,
+                                  "fullname": fullName,
+                                  "profileImageUrl": profileImageUrl]
+                    
+                    // Creating database structure for user profile
+                    REF_USERS.child(uid).updateChildValues(values) { (error, reference) in
+                        print("DEBUG: Successfully updated user information...")
+                    }
+                }
+            }
+        }
     }
     
     @objc func addProfilePhoto() {
@@ -146,6 +203,8 @@ extension RegistrationController:  UIImagePickerControllerDelegate, UINavigation
         guard let imageProvider = info[.editedImage] as? UIImage else { return }
         self.plusButton.setImage(imageProvider.withRenderingMode(.alwaysOriginal),
                                  for: .normal)
+        // assigning profile image
+        self.profileImage = imageProvider
         
         // Picked Image configurations
         plusButton.layer.cornerRadius = 128 / 2
@@ -154,7 +213,7 @@ extension RegistrationController:  UIImagePickerControllerDelegate, UINavigation
         plusButton.imageView?.contentMode = .scaleAspectFill
         plusButton.layer.borderWidth = 3
         plusButton.layer.borderColor = UIColor.white.cgColor
-
+        
         dismiss(animated: true, completion: nil)
     }
 }
