@@ -19,6 +19,7 @@
 		4F86DC7F27649B47004FFB5A /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F86DC7E27649B47004FFB5A /* AppColors.swift */; };
 		4F86DC8227649DB9004FFB5A /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F86DC8127649DB9004FFB5A /* LoginController.swift */; };
 		4F86DC8427649DF0004FFB5A /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F86DC8327649DF0004FFB5A /* RegistrationController.swift */; };
+		4F93710B27664D37007667F8 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F93710A27664D37007667F8 /* AuthService.swift */; };
 		4FB35AB92764B4110021F277 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB35AB82764B4110021F277 /* Utilities.swift */; };
 		4FB35ABB2764E4960021F277 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FB35ABA2764E4960021F277 /* GoogleService-Info.plist */; };
 		4FB7F64D275D4FD0008F7AB7 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F64C275D4FD0008F7AB7 /* FeedController.swift */; };
@@ -44,6 +45,7 @@
 		4F86DC7E27649B47004FFB5A /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		4F86DC8127649DB9004FFB5A /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		4F86DC8327649DF0004FFB5A /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
+		4F93710A27664D37007667F8 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		4FB35AB82764B4110021F277 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		4FB35ABA2764E4960021F277 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		4FB7F64C275D4FD0008F7AB7 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
@@ -108,7 +110,6 @@
 				4F4D9468275D14CE00650A93 /* Application */,
 				4FB7F654275D532F008F7AB7 /* Constants */,
 				4F4D9461275D133500650A93 /* Controllers */,
-				4F62C77C2763E8B300E08809 /* Extensions */,
 				4F4D9464275D133A00650A93 /* Model */,
 				4F4D9469275D14DC00650A93 /* Resources */,
 				4F4D9465275D135800650A93 /* Utilities */,
@@ -121,6 +122,7 @@
 		4F4D9460275D133400650A93 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				4F93710A27664D37007667F8 /* AuthService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -163,6 +165,10 @@
 		4F4D9465275D135800650A93 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4F62C77D2763E8C900E08809 /* UIButtonConfigurationExtension.swift */,
+				4F62C77F2763F1A200E08809 /* NSConstraintsExtension.swift */,
+				4F86DC7E27649B47004FFB5A /* AppColors.swift */,
+				4FB35AB82764B4110021F277 /* Utilities.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -184,17 +190,6 @@
 				4F4D9459275D12FB00650A93 /* Info.plist */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		4F62C77C2763E8B300E08809 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				4F62C77D2763E8C900E08809 /* UIButtonConfigurationExtension.swift */,
-				4F62C77F2763F1A200E08809 /* NSConstraintsExtension.swift */,
-				4F86DC7E27649B47004FFB5A /* AppColors.swift */,
-				4FB35AB82764B4110021F277 /* Utilities.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		4F86DC8027649D86004FFB5A /* Authentication */ = {
@@ -345,6 +340,7 @@
 				4FB7F64D275D4FD0008F7AB7 /* FeedController.swift in Sources */,
 				4F62C7802763F1A200E08809 /* NSConstraintsExtension.swift in Sources */,
 				4FB7F656275D533D008F7AB7 /* Constants.swift in Sources */,
+				4F93710B27664D37007667F8 /* AuthService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

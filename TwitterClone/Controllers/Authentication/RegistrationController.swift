@@ -122,45 +122,18 @@ class RegistrationController: UIViewController {
               let password = passwordTextField.text,
               let fullName = fullNameTextField.text,
               let username = usernameTextField.text else { return }
-        print("You are here with \(email) and \(password)")
         
-        // Converting an uploaded image into data and
-        // compressing an image quality
-        guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
-        // Generating unique UUID for each uploaded image
-        let fileName = NSUUID().uuidString
-        // Referencing the place for created storage
-        let storageRef = STORAGE_PROFILE_IMAGES.child(fileName)
-        // Uploading image data to the provided storage reference
-        storageRef.putData(imageData, metadata: nil) { (meta, error) in
-            print("data put")
-            // Getting downloaded url for an image, storage url is gonna be stored in the database structure
-            storageRef.downloadURL { (url, error) in
-                guard let profileImageUrl = url?.absoluteString else {
-                    print("URL is missing \(String(describing: error))")
-                    return }
-                print("Got url")
-                
-                // Firebase authentication creating a user
-                Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-                    if let error = error {
-                        print("DEBUG THE ERROR: \(error.localizedDescription)")
-                        return
-                    }
-                    // UID asks to come data back for the result in Auth call
-                    guard let uid = result?.user.uid else { return }
-                    // Dictionary with values to register the user
-                    let values = ["email": email,
-                                  "username": username,
-                                  "fullname": fullName,
-                                  "profileImageUrl": profileImageUrl]
-                    
-                    // Creating database structure for user profile
-                    REF_USERS.child(uid).updateChildValues(values) { (error, reference) in
-                        print("DEBUG: Successfully updated user information...")
-                    }
-                }
-            }
+        let userCredentials = AuthCredentials(email: email,
+                                              password: password,
+                                              fullName: fullName,
+                                              username: username,
+                                              profileImage: profileImage)
+        // Registering the user to Firebase with input credentials
+        AuthService.shared.registerUser(credentials: userCredentials) { (error, reference) in
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            guard let tabController = window.rootViewController as? MainTabController else { return }
+            tabController.authenticateUserAndConfigureUI()
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
