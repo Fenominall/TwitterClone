@@ -27,6 +27,8 @@
 		4FB7F651275D5049008F7AB7 /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F650275D5049008F7AB7 /* NotificationsController.swift */; };
 		4FB7F653275D506D008F7AB7 /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F652275D506D008F7AB7 /* ConversationsController.swift */; };
 		4FB7F656275D533D008F7AB7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F655275D533D008F7AB7 /* Constants.swift */; };
+		4FCB1824276BC58900388E96 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCB1823276BC58900388E96 /* UserService.swift */; };
+		4FCB1826276BCBB000388E96 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCB1825276BCBB000388E96 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,8 @@
 		4FB7F650275D5049008F7AB7 /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
 		4FB7F652275D506D008F7AB7 /* ConversationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsController.swift; sourceTree = "<group>"; };
 		4FB7F655275D533D008F7AB7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4FCB1823276BC58900388E96 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		4FCB1825276BCBB000388E96 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E9F0C2A699A9E1FAD3666953 /* Pods_TwitterClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwitterClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -123,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				4F93710A27664D37007667F8 /* AuthService.swift */,
+				4FCB1823276BC58900388E96 /* UserService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -158,6 +163,7 @@
 		4F4D9464275D133A00650A93 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4FCB1825276BCBB000388E96 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -331,6 +337,8 @@
 				4FB35AB92764B4110021F277 /* Utilities.swift in Sources */,
 				4F86DC8227649DB9004FFB5A /* LoginController.swift in Sources */,
 				4FB7F653275D506D008F7AB7 /* ConversationsController.swift in Sources */,
+				4FCB1824276BC58900388E96 /* UserService.swift in Sources */,
+				4FCB1826276BCBB000388E96 /* User.swift in Sources */,
 				4F4D944C275D12F900650A93 /* AppDelegate.swift in Sources */,
 				4FB7F64F275D501B008F7AB7 /* ExploreController.swift in Sources */,
 				4F86DC7F27649B47004FFB5A /* AppColors.swift in Sources */,
