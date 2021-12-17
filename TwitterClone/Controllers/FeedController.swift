@@ -13,7 +13,7 @@ class FeedController: UIViewController {
     // MARK: - Properties
     var user: User? {
         didSet {
-            print("DEBUG: Did set user in feed controller..")
+            configureLetBarButton()
         }
     }
     
@@ -29,12 +29,20 @@ class FeedController: UIViewController {
         
         let imageView = UIImageView(image: Constants.twitterImageBlue)
         imageView.contentMode = .scaleAspectFit
+        imageView.setDimensions(width: 44, height: 44)
         navigationItem.titleView = imageView
-        
+    }
+    
+    func configureLetBarButton() {
+        guard let user = user else { return }
+
         let profileImageView = UIImageView()
-        profileImageView.backgroundColor = .twitterBlue
         profileImageView.setDimensions(width: 32, height: 32)
         profileImageView.layer.cornerRadius = 32 / 2
+        profileImageView.layer.masksToBounds = true
+        
+        // Downloading an image from url to set it for profileImageView
+        Utilities().downloadImageTask(with: user.profileImageUrl, for: profileImageView)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
     }

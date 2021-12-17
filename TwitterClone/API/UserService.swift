@@ -12,7 +12,7 @@ struct UserService {
     static let shared = UserService()
     
     func fetchUser(completion: @escaping (User) -> Void) {
-        // Getting to users` reference to find to current user`s uid
+        // Getting users` references to find to current user`s uid
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         // Make API call to get user data by uid

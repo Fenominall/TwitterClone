@@ -46,7 +46,12 @@ class MainTabController: UITabBarController {
     
     // MARK: - Selectors
     @objc func actionButtonTapped() {
-        print("Test")
+        guard let user = user else { return }
+        
+        let uploadTweetController = UploadTweetsController(user: user)
+        let uploadTweetNav = UINavigationController(rootViewController: uploadTweetController)
+        uploadTweetNav.modalPresentationStyle = .fullScreen
+        present(uploadTweetNav, animated: true, completion: nil)
     }
     
     // MARK: - API
@@ -111,21 +116,21 @@ extension MainTabController {
     func templateNavigationController(image: UIImage?,
                                       rootViewController: UIViewController) -> UINavigationController {
         // NavBar appearance
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .white
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+//        let appearance = UINavigationBarAppearance()
+//        appearance.backgroundColor = .white
+//        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+//        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
         
         // Creating NavBar and assigning the properties
         let navigationController = UINavigationController(rootViewController: rootViewController)
         navigationController.tabBarItem.image = image
         // NavBar appearance
-        navigationController.navigationBar.tintColor = .black
-        navigationController.navigationBar.standardAppearance = appearance
-        navigationController.navigationBar.compactAppearance = appearance
-        navigationController.navigationBar.scrollEdgeAppearance = appearance
-        navigationController.navigationBar.backgroundColor = .white
-        navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+//        navigationController.navigationBar.tintColor = .black
+//        navigationController.navigationBar.standardAppearance = appearance
+//        navigationController.navigationBar.compactAppearance = appearance
+//        navigationController.navigationBar.scrollEdgeAppearance = appearance
+//        navigationController.navigationBar.backgroundColor = .white
+//        navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         //        navigationController.navigationBar.prefersLargeTitles = true
         
         return navigationController
