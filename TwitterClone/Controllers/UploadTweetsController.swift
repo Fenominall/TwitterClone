@@ -25,8 +25,10 @@ class UploadTweetsController: UIViewController {
         return button
     }()
     
-    private let profileImageView: UIImageView = {
-        let imageView = UIImageView()
+    // UIImageView with a custom class for caching Images provided by URL
+    //    or download them if cache not found
+    private let profileImageView: CachedImageView = {
+        let imageView = CachedImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.setDimensions(width: 48, height: 48)
@@ -35,6 +37,14 @@ class UploadTweetsController: UIViewController {
         return imageView
     }()
     
+    private let captionTextView = CaptionTextView()
+    
+    private lazy var tweetStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [profileImageView, captionTextView])
+        stack.axis = .horizontal
+        stack.spacing = 12
+        return stack
+    }()
     
     // MARK: - Lifecycle
     init(user: User) {
@@ -50,15 +60,25 @@ class UploadTweetsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        //        view.backgroundColor = .red
     }
+    
     // MARK: - Selectors
     @objc private func handleCancel() {
         dismiss(animated: true, completion: nil)
     }
     
+    // Guard checks if captionTextView has text and then uploads tweet to a database if it`s successful.
     @objc private func handleUploadTweet() {
-        print("DEBUG")
+        // Guard checks if captionTextView has text and then uploads tweet to a database if it`s successful.
+        guard let caption = captionTextView.text else { return }
+        TweetService.shared.uploadTweet(caption: caption) { [weak self] (error, reference) in
+            if let error = error {
+                print("DEBUG: Failed to upload a tweet with error: \(error.localizedDescription)")
+                return
+            }
+            // After tweet is successfully uploaded navigation-controller dismiss the current view to controller
+            self?.dismiss(animated: true, completion: nil)
+        }
     }
     
     // MARK: - API
@@ -68,13 +88,15 @@ class UploadTweetsController: UIViewController {
         view.backgroundColor = .white
         configureNavigationBar()
         
-        view.addSubview(profileImageView)
-        profileImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                                left: view.safeAreaLayoutGuide.leftAnchor,
-                                paddingTop: 16, paddingLeft: 16)
+        view.addSubview(tweetStackView)
+        tweetStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                              left: view.safeAreaLayoutGuide.leftAnchor,
+                              right: view.safeAreaLayoutGuide.rightAnchor,
+                              paddingTop: 16, paddingLeft: 16, paddingRight: 16)
         
-//        profileImageView.image = user.profileImageUrl
-      
+        // Representing userProfile cached image, if cache not found the image will downloaded from provided URL
+        profileImageView.loadImage(withURL: user.profileImageUrl as NSURL?)
+        
     }
     
     private func configureNavigationBar() {

@@ -42,7 +42,7 @@ class FeedController: UIViewController {
         profileImageView.layer.masksToBounds = true
         
         // Downloading an image from url to set it for profileImageView
-        Utilities().downloadImageTask(with: user.profileImageUrl, for: profileImageView)
+        UserService.shared.downloadImageTask(with: user.profileImageUrl, for: profileImageView)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
     }

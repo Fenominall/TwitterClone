@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3B64B7916D780C0B1873B03D /* Pods_TwitterClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9F0C2A699A9E1FAD3666953 /* Pods_TwitterClone.framework */; };
 		4F1CAF50276D21160034EBA3 /* UploadTweetsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1CAF4F276D21160034EBA3 /* UploadTweetsController.swift */; };
+		4F2B2DCE276F94F90020F27A /* TweetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2B2DCD276F94F90020F27A /* TweetService.swift */; };
 		4F39D93427653B9900149770 /* DBConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F39D93327653B9900149770 /* DBConstants.swift */; };
 		4F4D944C275D12F900650A93 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4D944B275D12F900650A93 /* AppDelegate.swift */; };
 		4F4D944E275D12F900650A93 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4D944D275D12F900650A93 /* SceneDelegate.swift */; };
@@ -17,6 +18,9 @@
 		4F4D9467275D13FB00650A93 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4D9466275D13FB00650A93 /* MainTabController.swift */; };
 		4F62C77E2763E8C900E08809 /* UIButtonConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F62C77D2763E8C900E08809 /* UIButtonConfigurationExtension.swift */; };
 		4F62C7802763F1A200E08809 /* NSConstraintsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F62C77F2763F1A200E08809 /* NSConstraintsExtension.swift */; };
+		4F6E095B276E7026004DA592 /* CachedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E095A276E7026004DA592 /* CachedImageView.swift */; };
+		4F6E095D276E707D004DA592 /* DiscardableImageCacheItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E095C276E707D004DA592 /* DiscardableImageCacheItem.swift */; };
+		4F713FCE276F75AA0060B893 /* CaptionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F713FCD276F75AA0060B893 /* CaptionTextView.swift */; };
 		4F86DC7F27649B47004FFB5A /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F86DC7E27649B47004FFB5A /* AppColors.swift */; };
 		4F86DC8227649DB9004FFB5A /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F86DC8127649DB9004FFB5A /* LoginController.swift */; };
 		4F86DC8427649DF0004FFB5A /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F86DC8327649DF0004FFB5A /* RegistrationController.swift */; };
@@ -36,6 +40,7 @@
 		11D57413B372532034C4643E /* Pods-TwitterClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterClone.debug.xcconfig"; path = "Target Support Files/Pods-TwitterClone/Pods-TwitterClone.debug.xcconfig"; sourceTree = "<group>"; };
 		1ACE9853BF92C45C18702CCE /* Pods-TwitterClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterClone.release.xcconfig"; path = "Target Support Files/Pods-TwitterClone/Pods-TwitterClone.release.xcconfig"; sourceTree = "<group>"; };
 		4F1CAF4F276D21160034EBA3 /* UploadTweetsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTweetsController.swift; sourceTree = "<group>"; };
+		4F2B2DCD276F94F90020F27A /* TweetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetService.swift; sourceTree = "<group>"; };
 		4F39D93327653B9900149770 /* DBConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBConstants.swift; sourceTree = "<group>"; };
 		4F4D9448275D12F900650A93 /* TwitterClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F4D944B275D12F900650A93 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -46,6 +51,9 @@
 		4F4D9466275D13FB00650A93 /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		4F62C77D2763E8C900E08809 /* UIButtonConfigurationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonConfigurationExtension.swift; sourceTree = "<group>"; };
 		4F62C77F2763F1A200E08809 /* NSConstraintsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSConstraintsExtension.swift; sourceTree = "<group>"; };
+		4F6E095A276E7026004DA592 /* CachedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedImageView.swift; sourceTree = "<group>"; };
+		4F6E095C276E707D004DA592 /* DiscardableImageCacheItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscardableImageCacheItem.swift; sourceTree = "<group>"; };
+		4F713FCD276F75AA0060B893 /* CaptionTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionTextView.swift; sourceTree = "<group>"; };
 		4F86DC7E27649B47004FFB5A /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		4F86DC8127649DB9004FFB5A /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		4F86DC8327649DF0004FFB5A /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
@@ -129,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				4F93710A27664D37007667F8 /* AuthService.swift */,
+				4F2B2DCD276F94F90020F27A /* TweetService.swift */,
 				4FCB1823276BC58900388E96 /* UserService.swift */,
 			);
 			path = API;
@@ -159,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				4F4D9456275D12FB00650A93 /* LaunchScreen.storyboard */,
+				4F713FCD276F75AA0060B893 /* CaptionTextView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -178,6 +188,7 @@
 				4F62C77F2763F1A200E08809 /* NSConstraintsExtension.swift */,
 				4F86DC7E27649B47004FFB5A /* AppColors.swift */,
 				4FB35AB82764B4110021F277 /* Utilities.swift */,
+				4F6E095E276E7095004DA592 /* ImageCacheing */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -199,6 +210,15 @@
 				4F4D9459275D12FB00650A93 /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		4F6E095E276E7095004DA592 /* ImageCacheing */ = {
+			isa = PBXGroup;
+			children = (
+				4F6E095A276E7026004DA592 /* CachedImageView.swift */,
+				4F6E095C276E707D004DA592 /* DiscardableImageCacheItem.swift */,
+			);
+			path = ImageCacheing;
 			sourceTree = "<group>";
 		};
 		4F86DC8027649D86004FFB5A /* Authentication */ = {
@@ -336,11 +356,15 @@
 			files = (
 				4F86DC8427649DF0004FFB5A /* RegistrationController.swift in Sources */,
 				4FB7F651275D5049008F7AB7 /* NotificationsController.swift in Sources */,
+				4F6E095B276E7026004DA592 /* CachedImageView.swift in Sources */,
 				4F39D93427653B9900149770 /* DBConstants.swift in Sources */,
 				4FB35AB92764B4110021F277 /* Utilities.swift in Sources */,
+				4F2B2DCE276F94F90020F27A /* TweetService.swift in Sources */,
 				4F86DC8227649DB9004FFB5A /* LoginController.swift in Sources */,
 				4FB7F653275D506D008F7AB7 /* ConversationsController.swift in Sources */,
 				4FCB1824276BC58900388E96 /* UserService.swift in Sources */,
+				4F713FCE276F75AA0060B893 /* CaptionTextView.swift in Sources */,
+				4F6E095D276E707D004DA592 /* DiscardableImageCacheItem.swift in Sources */,
 				4FCB1826276BCBB000388E96 /* User.swift in Sources */,
 				4F4D944C275D12F900650A93 /* AppDelegate.swift in Sources */,
 				4FB7F64F275D501B008F7AB7 /* ExploreController.swift in Sources */,
