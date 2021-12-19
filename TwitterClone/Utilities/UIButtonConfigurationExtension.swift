@@ -14,7 +14,7 @@ extension UIButton.Configuration {
         var configuration: UIButton.Configuration = .filled()
         configuration.baseBackgroundColor = .twitterBlue
         configuration.baseForegroundColor = .white
-        configuration.image = Constants.newTweet
+        configuration.image = Constants.newTweetImage
         return configuration
     }
     

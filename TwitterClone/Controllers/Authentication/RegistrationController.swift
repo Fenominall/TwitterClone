@@ -20,22 +20,22 @@ class RegistrationController: UIViewController {
     
     // UIViews
     private lazy var emailContainerView: UIView = {
-        let emailContainer = Utilities().inputContainerView(withImage: Constants.mail!, textField: emailTextField)
+        let emailContainer = Utilities().inputContainerView(withImage: Constants.mailImage!, textField: emailTextField)
         return emailContainer
     }()
     
     private lazy var passwordContainerView: UIView = {
-        let passwordContainer = Utilities().inputContainerView(withImage: Constants.lock!, textField: passwordTextField)
+        let passwordContainer = Utilities().inputContainerView(withImage: Constants.lockImage!, textField: passwordTextField)
         return passwordContainer
     }()
     
     private lazy var fullNameContainerView: UIView = {
-        let nameContainer = Utilities().inputContainerView(withImage: Constants.person!, textField: fullNameTextField)
+        let nameContainer = Utilities().inputContainerView(withImage: Constants.personImage!, textField: fullNameTextField)
         return nameContainer
     }()
     
     private lazy var usernameContainerView: UIView = {
-        let container = Utilities().inputContainerView(withImage: Constants.person!, textField: usernameTextField)
+        let container = Utilities().inputContainerView(withImage: Constants.personImage!, textField: usernameTextField)
         return container
     }()
     
@@ -64,7 +64,7 @@ class RegistrationController: UIViewController {
     // Buttons
     private lazy var plusButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(Constants.plusPhoto, for: .normal)
+        button.setImage(Constants.plusPhotoImage, for: .normal)
         button.tintColor = .white
         button.addTarget(self, action: #selector(addProfilePhoto), for: .touchUpInside)
         return button

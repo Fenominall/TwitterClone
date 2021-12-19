@@ -50,7 +50,6 @@ class UploadTweetsController: UIViewController {
     init(user: User) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
-        print("DEBUG: The user is \(user.username)")
     }
     
     required init?(coder: NSCoder) {
