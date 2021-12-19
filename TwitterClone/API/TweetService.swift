@@ -27,4 +27,20 @@ struct TweetService {
         // after uid is successfully created a "tweet" will be uploaded
         REF_TWEETS.childByAutoId().updateChildValues(values, withCompletionBlock: completion)
     }
+    
+    func fetchTweets(completion: @escaping ([Tweet]) -> Void) {
+        var tweets = [Tweet]()
+        
+        REF_TWEETS.observe(.childAdded) { snapshot in
+            // Constructing a fetched tweet structure into dictionary
+            guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
+            // Getting uid key from a tweet
+            let tweetID = snapshot.key
+            // Creating a tweet with the received data
+            let tweet = Tweet(tweetID: tweetID, dictionary: dictionary)
+            // adding a tweet to the tweets list
+            tweets.append(tweet)
+            completion(tweets)
+        }
+    }
 }
