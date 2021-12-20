@@ -60,7 +60,7 @@ class FeedController: UICollectionViewController {
         profileImageView.layer.masksToBounds = true
         
         // Downloading an image from url to set it for profileImageView
-        UserService.shared.downloadImageTask(with: user.profileImageUrl, for: profileImageView)
+        UserService.shared.downloadAndSetImage(with: user.profileImageUrl, for: profileImageView)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
     }
@@ -76,6 +76,9 @@ extension FeedController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                       for: indexPath) as! TweetCell
+        // access tweet property and setting it the fetched tweets to be a dataSource
+        // Populating tweet cell, whenever the property gets set with the data received from the FeedController
+        cell.tweet = tweets[indexPath.row]
         return cell
     }
 }

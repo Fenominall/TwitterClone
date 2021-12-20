@@ -11,6 +11,11 @@ class TweetCell: UICollectionViewCell {
     
     // MARK: - Properties
 
+    // Populating tweet cell, whenever the property gets set with the data received from the FeedController
+    var tweet: Tweet? {
+        didSet { configure() }
+    }
+    
     private let profileImageView: CachedImageView = {
         let imageView = CachedImageView()
         imageView.contentMode = .scaleAspectFit
@@ -108,7 +113,7 @@ class TweetCell: UICollectionViewCell {
                                 paddingTop: 8,
                                 paddingLeft: 8)
         
-        infoLabel.text = "@Ven0m"
+        infoLabel.text = "Vlad @Ven0m"
         infoLabel.font = UIFont.systemFont(ofSize: 14)
         
         addSubview(infoStackView)
@@ -154,4 +159,11 @@ class TweetCell: UICollectionViewCell {
     }
     // MARK: - Helpers
 
+    func configure() {
+        guard let tweet = tweet else { return }
+        
+        // configuring fetched tweet`s data with each tweet`s element
+        captionLabel.text = tweet.caption
+        
+    }
 }

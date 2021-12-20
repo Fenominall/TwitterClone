@@ -34,7 +34,7 @@ struct UserService {
 
 extension UserService {
     // Asynchronous func to download image from Firebase "RealTime Database" for user profile image
-    func downloadImageTask(with url: URL?, for imageView: UIImageView) {
+    func downloadAndSetImage(with url: URL?, for imageView: UIImageView) {
         guard let url = url else { return }
         
         let downloadImageTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
