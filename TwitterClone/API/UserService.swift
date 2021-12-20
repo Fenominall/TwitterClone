@@ -12,9 +12,9 @@ import UIKit
 struct UserService {
     static let shared = UserService()
     
-    func fetchUser(completion: @escaping (User) -> Void) {
+    func fetchUser(uid: String, completion: @escaping (User) -> Void) {
         // Getting users` references to find to current user`s uid
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
         
         // Make API call to get user data by uid
         REF_USERS.child(uid).observeSingleEvent(of: .value) { snapShoot in

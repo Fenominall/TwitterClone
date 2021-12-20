@@ -161,9 +161,12 @@ class TweetCell: UICollectionViewCell {
 
     func configure() {
         guard let tweet = tweet else { return }
+        let tweetViewModel = TweetViewModel(tweet: tweet)
         
         // configuring fetched tweet`s data with each tweet`s element
         captionLabel.text = tweet.caption
+        profileImageView.loadImage(withURL: tweetViewModel.profileImageURL as NSURL?)
+        infoLabel.attributedText = tweetViewModel.userInfoText
         
     }
 }

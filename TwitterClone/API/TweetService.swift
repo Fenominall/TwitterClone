@@ -36,11 +36,18 @@ struct TweetService {
             guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
             // Getting uid key from a tweet
             let tweetID = snapshot.key
-            // Creating a tweet with the received data
-            let tweet = Tweet(tweetID: tweetID, dictionary: dictionary)
-            // adding a tweet to the tweets list
-            tweets.append(tweet)
-            completion(tweets)
+            // getting a user unique id reference from the database
+            guard let uid = dictionary["uid"] as? String else { return }
+            // Fetching user by received uid to get the corresponding data
+            UserService.shared.fetchUser(uid: uid) { user in
+                // Creating a tweet with the received data
+                // Because a user reference is used to create a tweet I will be able to use user data for tweets
+                let tweet = Tweet(user: user,tweetID: tweetID, dictionary:  dictionary)
+                // adding a tweet to the tweets list
+                tweets.append(tweet)
+                completion(tweets)
+            }
+            
         }
     }
 }
