@@ -24,4 +24,5 @@ public struct Constants {
     static let retweetImage = UIImage(named: "retweet")
     static let likeImage  = UIImage(named: "like")
     static let shareImage = UIImage(named: "share")
+    static let backButtonImage = UIImage(named: "baseline_arrow_back_white_24dp")?.withRenderingMode(.alwaysOriginal)
 }

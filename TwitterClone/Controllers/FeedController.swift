@@ -76,6 +76,8 @@ extension FeedController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                       for: indexPath) as! TweetCell
+        // by assigning a delegate to self on this controller, a reference to tweet cell is created
+        cell.delegate = self
         // access tweet property and setting it the fetched tweets to be a dataSource
         // Populating tweet cell, whenever the property gets set with the data received from the FeedController
         cell.tweet = tweets[indexPath.row]
@@ -90,4 +92,14 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 120)
     }
+}
+
+// MARK: - TweetCellDelegate
+extension FeedController: TweetCellDelegate {
+    func handleProfileImageTapped(_ cell: TweetCell) {
+        let profileController = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(profileController, animated: true)
+    }
+    
+    
 }

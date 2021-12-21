@@ -25,7 +25,6 @@ struct UserService {
             
             // Creating custom user object
             let user = User(uid: uid, dictionary: userDataDictionary)
-            print("DEBUG: User username is \(user.username)")
             completion(user)
         }
         
