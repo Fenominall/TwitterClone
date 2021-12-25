@@ -38,6 +38,12 @@ class ProfileFilterView: UIView {
         addSubview(collectionView)
         // filling the entire UIView with the collectionView
         collectionView.addConstraintsToFillView(self)
+        
+        // Set a default indexpath to be selected
+        let selectedIndexPath = IndexPath(row: 0, section: 0)
+        collectionView.selectItem(at: selectedIndexPath,
+                                  animated: true,
+                                  scrollPosition: .left)
     }
     
     required init?(coder: NSCoder) {
@@ -58,11 +64,15 @@ extension ProfileFilterView: UICollectionViewDelegate {
 // MARK: - UICollectionViewDataSource
 extension ProfileFilterView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        // Set the count from ProfileFilterOptions enum
+        return ProfileFilterOptions.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProfileFilterCell
+        
+        let filterOptions = ProfileFilterOptions(rawValue: indexPath.row)
+        cell.titleLabel.text = filterOptions?.description
         return cell
     }
 }
@@ -71,7 +81,8 @@ extension ProfileFilterView: UICollectionViewDataSource {
 // adjust the size of ProfileFilterCell and amount of sections
 extension ProfileFilterView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width / 3, height: frame.height)
+        return CGSize(width: frame.width / CGFloat(ProfileFilterOptions.allCases.count),
+                      height: frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

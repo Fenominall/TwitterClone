@@ -8,9 +8,20 @@
 import Foundation
 import UIKit
 
+protocol ProfileHeaderViewDelegate: AnyObject {
+    func handleDismissal()
+}
+
 // Create reusable header for profile controller
 class ProfileHeaderView: UICollectionReusableView {
     // MARK: - Properties
+    
+    weak var delegate: ProfileHeaderViewDelegate?
+    
+    var user: User? {
+        didSet { configureUserData() }
+    }
+    
     private let filterBar = ProfileFilterView()
     
     private lazy var container: UIView = {
@@ -30,8 +41,8 @@ class ProfileHeaderView: UICollectionReusableView {
         return button
     }()
     
-    private let profileImageView: UIImageView = {
-        let imageView = UIImageView()
+    private let profileImageView: CachedImageView = {
+        let imageView = CachedImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.backgroundColor = .lightGray
@@ -69,7 +80,7 @@ class ProfileHeaderView: UICollectionReusableView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.numberOfLines = 3
-        label.text = "init(coder:) has not been implemented init(coder:) has not been implemented init(coder:) has not been implemented"
+        label.text = "init(coder:) has not been implemented init(coder:) has not been"
         return label
     }()
     
@@ -77,6 +88,22 @@ class ProfileHeaderView: UICollectionReusableView {
         let view = UIView()
         view.backgroundColor = .twitterBlue
         return view
+    }()
+    
+    private let followingLabel: UILabel = {
+        let label = UILabel()
+        let followTap = UITapGestureRecognizer(target: self, action: #selector(handleFollowersTapped))
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(followTap)
+        return label
+    }()
+    
+    private let followersLabel: UILabel = {
+        let label = UILabel()
+        let followTap = UITapGestureRecognizer(target: self, action: #selector(handleFollowingTapped))
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(followTap)
+        return label
     }()
     
     // MARK: - Lifecycle
@@ -93,10 +120,18 @@ class ProfileHeaderView: UICollectionReusableView {
     
     // MARK: - Selectors
     @objc func handleDismissal() {
-        
+        delegate?.handleDismissal()
     }
     
     @objc func handleEditProfileFollow() {
+        
+    }
+    
+    @objc func handleFollowersTapped() {
+        
+    }
+    
+    @objc func handleFollowingTapped() {
         
     }
     // MARK: - Helpers
@@ -138,6 +173,14 @@ class ProfileHeaderView: UICollectionReusableView {
                                paddingLeft: 12,
                                paddingRight: 12)
         
+        let followersStack = UIStackView(arrangedSubviews: [followersLabel,
+                                                            followingLabel])
+        followersStack.axis = .horizontal
+        followersStack.spacing = 8
+        followersStack.distribution = .fillEqually
+        addSubview(followersStack)
+        followersStack.anchor(top: userDetailStack.bottomAnchor, left: leftAnchor, paddingTop: 8, paddingLeft: 12)
+        
         addSubview(filterBar)
         filterBar.filterDelegate = self
         filterBar.anchor(left: leftAnchor,
@@ -151,6 +194,15 @@ class ProfileHeaderView: UICollectionReusableView {
                              bottom: bottomAnchor,
                              width: frame.width / 3,
                              height: 2)
+    }
+    
+    func configureUserData() {
+        guard let user = user else { return }
+        let profileViewModel = ProfileHeaderViewModel(user: user)
+        profileImageView.loadImage(withURL: user.profileImageUrl as NSURL?)
+        editProfileFollowButton.setTitle(profileViewModel.actionButtonTitle, for: .normal)
+        followingLabel.attributedText = profileViewModel.followingString
+        followersLabel.attributedText = profileViewModel.followersString
     }
 }
 

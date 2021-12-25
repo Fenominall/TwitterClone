@@ -44,6 +44,7 @@ class MainTabController: UITabBarController {
         authenticateUserAndConfigureUI()
     }
     
+    
     // MARK: - Selectors
     @objc func actionButtonTapped() {
         guard let user = user else { return }

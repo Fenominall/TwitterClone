@@ -50,6 +50,6 @@ extension UIColor {
         return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
     }
     
-    static let twitterBlue = UIColor(hex: "#119afb")
+    static let twitterBlue = UIColor(hex: "#0EA3F3")
     
 }

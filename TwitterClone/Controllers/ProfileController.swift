@@ -14,27 +14,23 @@ private let headerReuseIdentified = "ProfileHeader"
 class ProfileController: UICollectionViewController {
     
     // MARK: - Properties
-//    private lazy var container: UIView = {
-//        let container = UIView()
-//        container.backgroundColor = .twitterBlue
-//
-//        container.addSubview(backButton)
-//        backButton.anchor(top: container.topAnchor, left: container.leftAnchor, paddingTop: 42, paddingLeft: 16)
-//        backButton.setDimensions(width: 30, height: 30)
-//        return container
-//    }()
-//
-//    private lazy var backButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setImage(Constants.backButtonImage, for: .normal)
-//        return button
-//    }()
-//
+    private let user: User
     
     // MARK: - Lifecycle
+    init(user: User) {
+        self.user = user
+        // CollectionView controller has to be initialized
+        super.init(collectionViewLayout: UICollectionViewFlowLayout())
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,6 +76,8 @@ extension ProfileController {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                      withReuseIdentifier: headerReuseIdentified,
                                                                      for: indexPath) as! ProfileHeaderView
+        header.delegate = self
+        header.user = user
         return header
     }
 }
@@ -96,5 +94,13 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 120)
+    }
+}
+
+// MARK: - ProfileHeaderViewDelegate
+extension ProfileController: ProfileHeaderViewDelegate {
+    func handleDismissal() {
+        print("DEBUG: Handle dismissal...")
+        navigationController?.popViewController(animated: true)
     }
 }

@@ -9,11 +9,10 @@ import UIKit
 
 class ProfileFilterCell: UICollectionViewCell {
     // MARK: - Properties
-    private let titleLabel: UILabel = {
+    private(set) lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .lightGray
-        label.text = "Tweets"
         return label
     }()
     

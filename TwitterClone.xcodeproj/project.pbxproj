@@ -16,6 +16,8 @@
 		4F2B2DD2276FA5C80020F27A /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2B2DD1276FA5C80020F27A /* TweetCell.swift */; };
 		4F363C7827711621002B889F /* TweetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F363C7727711621002B889F /* TweetViewModel.swift */; };
 		4F39D93427653B9900149770 /* DBConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F39D93327653B9900149770 /* DBConstants.swift */; };
+		4F3E83EE2777606A00E62ADC /* ProfileHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3E83ED2777606A00E62ADC /* ProfileHeaderViewModel.swift */; };
+		4F3E83F0277761A200E62ADC /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3E83EF277761A200E62ADC /* ImageService.swift */; };
 		4F4D944C275D12F900650A93 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4D944B275D12F900650A93 /* AppDelegate.swift */; };
 		4F4D944E275D12F900650A93 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4D944D275D12F900650A93 /* SceneDelegate.swift */; };
 		4F4D9455275D12FB00650A93 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F4D9454275D12FB00650A93 /* Assets.xcassets */; };
@@ -54,6 +56,8 @@
 		4F2B2DD1276FA5C80020F27A /* TweetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
 		4F363C7727711621002B889F /* TweetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetViewModel.swift; sourceTree = "<group>"; };
 		4F39D93327653B9900149770 /* DBConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBConstants.swift; sourceTree = "<group>"; };
+		4F3E83ED2777606A00E62ADC /* ProfileHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewModel.swift; sourceTree = "<group>"; };
+		4F3E83EF277761A200E62ADC /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		4F4D9448275D12F900650A93 /* TwitterClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F4D944B275D12F900650A93 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F4D944D275D12F900650A93 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 				4F93710A27664D37007667F8 /* AuthService.swift */,
 				4F2B2DCD276F94F90020F27A /* TweetService.swift */,
 				4FCB1823276BC58900388E96 /* UserService.swift */,
+				4F3E83EF277761A200E62ADC /* ImageService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -176,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				4F363C7727711621002B889F /* TweetViewModel.swift */,
+				4F3E83ED2777606A00E62ADC /* ProfileHeaderViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -376,12 +382,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F86DC8427649DF0004FFB5A /* RegistrationController.swift in Sources */,
+				4F3E83F0277761A200E62ADC /* ImageService.swift in Sources */,
 				4FB7F651275D5049008F7AB7 /* NotificationsController.swift in Sources */,
 				4F6E095B276E7026004DA592 /* CachedImageView.swift in Sources */,
 				4F39D93427653B9900149770 /* DBConstants.swift in Sources */,
 				4FB35AB92764B4110021F277 /* Utilities.swift in Sources */,
 				4F2B2DCE276F94F90020F27A /* TweetService.swift in Sources */,
 				4F86DC8227649DB9004FFB5A /* LoginController.swift in Sources */,
+				4F3E83EE2777606A00E62ADC /* ProfileHeaderViewModel.swift in Sources */,
 				4FB7F653275D506D008F7AB7 /* ConversationsController.swift in Sources */,
 				4FCB1824276BC58900388E96 /* UserService.swift in Sources */,
 				4F713FCE276F75AA0060B893 /* CaptionTextView.swift in Sources */,

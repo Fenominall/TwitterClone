@@ -22,10 +22,17 @@ struct TweetService {
                       "likes": 0,
                       "retweets": 0,
                       "caption": caption] as [String: Any]
-        
-        // childByAutoId will automatically generate a uid for a new tweet,
-        // after uid is successfully created a "tweet" will be uploaded
-        REF_TWEETS.childByAutoId().updateChildValues(values, withCompletionBlock: completion)
+        // storing a reference to a tweet structures in Firebase database
+        let reference = REF_TWEETS.childByAutoId()
+        // By provided "uid" from the current-user, a new tweet structure with a unique "uid"
+        // and reference to a current-user "uid" will be created and uploaded to tweet structures tree in database
+        reference.updateChildValues(values) { (error, ref) in
+            // getting a created tweet by a key provided from
+            // a reference of uploaded tweets by a current-user "uid"
+            guard let tweetID = ref.key else { return }
+            // update user-tweet structure
+            REF_USER_TWEETS.child(uid).updateChildValues([tweetID: 1], withCompletionBlock: completion)
+        }
     }
     
     func fetchTweets(completion: @escaping ([Tweet]) -> Void) {

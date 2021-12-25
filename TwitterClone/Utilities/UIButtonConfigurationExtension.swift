@@ -17,6 +17,4 @@ extension UIButton.Configuration {
         configuration.image = Constants.newTweetImage
         return configuration
     }
-    
-    
 }

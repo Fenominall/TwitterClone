@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 struct User {
     let email: String
@@ -13,6 +14,11 @@ struct User {
     let username: String
     var profileImageUrl: URL?
     let uid: String
+    
+    // Checking if the user is the current user
+    var isCurrentUser: Bool {
+        return Auth.auth().currentUser?.uid == uid
+    }
     
     // Custom initializer
     // uid - unique identifier
