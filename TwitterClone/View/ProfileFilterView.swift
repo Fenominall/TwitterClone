@@ -9,10 +9,16 @@ import UIKit
 
 private let reuseIdentifier = "ProfileFilterCell"
 
+protocol ProfileFilterViewDelegate: AnyObject {
+    func animateFilterView(_ view: ProfileFilterView, didSelect indexPath: IndexPath)
+}
+
 class ProfileFilterView: UIView {
     
     
     // MARK: - Properties
+    weak var filterDelegate: ProfileFilterViewDelegate?
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero,
@@ -44,7 +50,9 @@ class ProfileFilterView: UIView {
 
 // MARK: - UICollectionViewDelegate
 extension ProfileFilterView: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        filterDelegate?.animateFilterView(self, didSelect: indexPath)
+    }
 }
 
 // MARK: - UICollectionViewDataSource

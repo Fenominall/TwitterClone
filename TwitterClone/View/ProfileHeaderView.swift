@@ -73,6 +73,12 @@ class ProfileHeaderView: UICollectionReusableView {
         return label
     }()
     
+    private let underlineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .twitterBlue
+        return view
+    }()
+    
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -133,7 +139,33 @@ class ProfileHeaderView: UICollectionReusableView {
                                paddingRight: 12)
         
         addSubview(filterBar)
-        filterBar.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, height: 50)
+        filterBar.filterDelegate = self
+        filterBar.anchor(left: leftAnchor,
+                         bottom: bottomAnchor,
+                         right: rightAnchor,
+                         height: 50)
+        
+        
+        addSubview(underlineView)
+        underlineView.anchor(left: leftAnchor,
+                             bottom: bottomAnchor,
+                             width: frame.width / 3,
+                             height: 2)
+    }
+}
+
+// MARK: - ProfileFilterViewDelegate
+extension ProfileHeaderView: ProfileFilterViewDelegate {
+    func animateFilterView(_ view: ProfileFilterView, didSelect indexPath: IndexPath) {
+        // got the cell for a corresponding indexPath
+        guard let cell = view.collectionView.cellForItem(at: indexPath) as? ProfileFilterCell else {
+            return
+        }
+        
+        let xPosition = cell.frame.origin.x
+        UIView.animate(withDuration: 0.3) {
+            self.underlineView.frame.origin.x = xPosition
+        }
     }
     
     
