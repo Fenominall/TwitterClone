@@ -14,22 +14,22 @@ private let headerReuseIdentified = "ProfileHeader"
 class ProfileController: UICollectionViewController {
     
     // MARK: - Properties
-    private lazy var container: UIView = {
-        let container = UIView()
-        container.backgroundColor = .twitterBlue
-        
-        container.addSubview(backButton)
-        backButton.anchor(top: container.topAnchor, left: container.leftAnchor, paddingTop: 42, paddingLeft: 16)
-        backButton.setDimensions(width: 30, height: 30)
-        return container
-    }()
-    
-    private lazy var backButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(Constants.backButtonImage, for: .normal)
-        return button
-    }()
-    
+//    private lazy var container: UIView = {
+//        let container = UIView()
+//        container.backgroundColor = .twitterBlue
+//
+//        container.addSubview(backButton)
+//        backButton.anchor(top: container.topAnchor, left: container.leftAnchor, paddingTop: 42, paddingLeft: 16)
+//        backButton.setDimensions(width: 30, height: 30)
+//        return container
+//    }()
+//
+//    private lazy var backButton: UIButton = {
+//        let button = UIButton(type: .system)
+//        button.setImage(Constants.backButtonImage, for: .normal)
+//        return button
+//    }()
+//
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -88,7 +88,7 @@ extension ProfileController {
 extension ProfileController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 300)
+        return CGSize(width: view.frame.width, height: 350)
     }
     
     
