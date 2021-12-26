@@ -43,6 +43,14 @@ struct ProfileHeaderViewModel {
         user.isCurrentUser ? "Edit profile" : "Follow"
     }
     
+    var fullName: String {
+        user.fullname
+    }
+    
+    var username: String {
+        "@\(user.username)"
+    }
+    
     init(user: User) {
         self.user = user
     }
