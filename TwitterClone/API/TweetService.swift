@@ -35,8 +35,9 @@ struct TweetService {
         }
     }
     
+    /// Fetching for all tweets of all users in the feed controller
     func fetchTweets(completion: @escaping ([Tweet]) -> Void) {
-        var tweets = [Tweet]()
+        var tweets: [Tweet] = []
         
         REF_TWEETS.observe(.childAdded) { snapshot in
             // Constructing a fetched tweet structure into dictionary
@@ -55,6 +56,30 @@ struct TweetService {
                 completion(tweets)
             }
             
+        }
+    }
+    
+    /// Fetching for current user tweets in Users profile
+    func fetchTweets(forUser user: User, completion: @escaping ([Tweet]) -> Void) {
+        var tweets: [Tweet] = []
+        // fetching tweets for any user tweets by users` "uid"
+        REF_USER_TWEETS.child(user.uid).observe(.childAdded) { snapshot in
+            // after getting current fetching user`s tweets` uid, it uses a tweet`s key
+            // to go into tweet`s structure and find tweets uid to get the datas
+            let tweetID = snapshot.key
+            
+            REF_TWEETS.child(tweetID).observeSingleEvent(of: .value) { snapshot in
+                guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
+                guard let uid = dictionary["uid"] as? String else { return }
+                UserService.shared.fetchUser(uid: uid) { user in
+                    // Creating a tweet with the received data
+                    // Because a user reference is used to create a tweet I will be able to use user data for tweets
+                    let tweet = Tweet(user: user,tweetID: tweetID, dictionary:  dictionary)
+                    // adding a tweet to the tweets list
+                    tweets.append(tweet)
+                    completion(tweets)
+                }
+            }
         }
     }
 }
