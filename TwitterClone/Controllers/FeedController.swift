@@ -15,7 +15,7 @@ class FeedController: UICollectionViewController {
     // MARK: - Properties
     var user: User? {
         didSet {
-            configureLetBarButton()
+            configureLeftBarButton()
         }
     }
     
@@ -56,7 +56,7 @@ class FeedController: UICollectionViewController {
         
     }
     
-    func configureLetBarButton() {
+    func configureLeftBarButton() {
         guard let user = user else { return }
         
         let profileImageView = UIImageView()

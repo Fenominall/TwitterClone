@@ -121,7 +121,6 @@ class TweetCell: UICollectionViewCell {
                                 paddingTop: 8,
                                 paddingLeft: 8)
         
-        infoLabel.text = "Vlad @Ven0m"
         infoLabel.font = UIFont.systemFont(ofSize: 14)
         
         addSubview(infoStackView)

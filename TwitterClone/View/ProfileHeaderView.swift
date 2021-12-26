@@ -203,7 +203,7 @@ class ProfileHeaderView: UICollectionReusableView {
         followersLabel.attributedText = profileViewModel.followersString
         
         fullnameLabel.text = profileViewModel.fullName
-        usernameLabel.text = profileViewModel.username 
+        usernameLabel.text = profileViewModel.username
     }
 }
 
