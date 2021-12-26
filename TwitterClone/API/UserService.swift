@@ -44,5 +44,19 @@ struct UserService {
             completion(users)
         }
     }
+    
+    func followUser(uid: String, completion: @escaping (Error?, DatabaseReference) -> Void) {
+        // getting a currentUser logged in user uid
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        // updating "user-following" database structure,
+        // currentUser starts following selected user uid
+        // selected uid is added to currentUser following list
+        REF_USER_FOLLOWING.child(currentUid).updateChildValues([uid: 1]) { (error, reference) in
+            // updating "user-followers" database structure,
+            // selected user uid gains "currentUser" uid
+            // currentUser uid is added to selected user uid following list
+            REF_USER_FOLLOWERS.child(uid).updateChildValues([currentUid: 1], withCompletionBlock: completion)
+        }
+    }
 }
 
