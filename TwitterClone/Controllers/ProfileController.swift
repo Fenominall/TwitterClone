@@ -14,7 +14,7 @@ private let headerReuseIdentified = "ProfileHeader"
 class ProfileController: UICollectionViewController {
     
     // MARK: - Properties
-    private let user: User
+    private var user: User
     
     private var tweets: [Tweet] = [] {
         didSet { collectionView.reloadData() }
@@ -35,7 +35,7 @@ class ProfileController: UICollectionViewController {
         super.viewDidLoad()
         configureCollectionView()
         fetchTweets()
-        
+        checkIfUserIsFollowed()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,6 +52,12 @@ class ProfileController: UICollectionViewController {
         }
     }
     
+    func checkIfUserIsFollowed() {
+        UserService.shared.checkIfUserIsFollowing(uid: user.uid) { isFollowed in
+            self.user.isFollowed = isFollowed
+            self.collectionView.reloadData()
+        }
+    }
     
     
     // MARK: - Helpers
@@ -109,16 +115,28 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         return CGSize(width: view.frame.width, height: 120)
     }
 }
 
 // MARK: - ProfileHeaderViewDelegate
 extension ProfileController: ProfileHeaderViewDelegate {
+    // implementing the function to follow and unfollow a user
     func handleEditProfileFollow(_ header: ProfileHeaderView) {
-//        print("DEBUG: Should follow user...")
-        UserService.shared.followUser(uid: user.uid) { (ref, error) in
-            	 
+        
+        if user.isFollowed {
+            UserService.shared.unfollowUser(uid: user.uid) { [weak self] (error, reference) in
+                self?.user.isFollowed = false
+                header.editProfileFollowButton.setTitle("Follow", for: .normal)
+                self?.collectionView.reloadData()
+            }
+        } else {
+            UserService.shared.followUser(uid: user.uid) { [weak self] (ref, error) in
+                self?.user.isFollowed = true
+                header.editProfileFollowButton.setTitle("Following", for: .normal)
+                self?.collectionView.reloadData()
+            }
         }
     }
     

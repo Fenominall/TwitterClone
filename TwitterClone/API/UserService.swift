@@ -8,6 +8,8 @@
 import Firebase
 import UIKit
 
+typealias DatabaseCompletion = ((Error?, DatabaseReference) -> Void)
+
 // MARK: - Service to fetch user data
 struct UserService {
     static let shared = UserService()
@@ -45,18 +47,47 @@ struct UserService {
         }
     }
     
-    func followUser(uid: String, completion: @escaping (Error?, DatabaseReference) -> Void) {
+    func followUser(uid: String, completion: @escaping (DatabaseCompletion)) {
         // getting a currentUser logged in user uid
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         // updating "user-following" database structure,
         // currentUser starts following selected user uid
         // selected uid is added to currentUser following list
-        REF_USER_FOLLOWING.child(currentUid).updateChildValues([uid: 1]) { (error, reference) in
-            // updating "user-followers" database structure,
-            // selected user uid gains "currentUser" uid
-            // currentUser uid is added to selected user uid following list
-            REF_USER_FOLLOWERS.child(uid).updateChildValues([currentUid: 1], withCompletionBlock: completion)
-        }
+        REF_USER_FOLLOWING.child(currentUid)
+            .updateChildValues([uid: 1]) { (error, reference) in
+                // updating "user-followers" database structure,
+                // selected user uid gains "currentUser" uid
+                // currentUser uid is added to selected user uid following list
+                REF_USER_FOLLOWERS.child(uid)
+                    .updateChildValues([currentUid: 1],
+                                       withCompletionBlock: completion)
+            }
+    }
+    
+    func unfollowUser(uid: String, completion: @escaping (DatabaseCompletion)) {
+        // getting a currentUser logged in user uid
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        // updating currentUser "user-following" database structure,
+        // currentUser is removed from the selected user uid "user-followers" structure
+        REF_USER_FOLLOWING.child(currentUid)
+            .child(uid).removeValue { (error, reference) in
+                // updating selected user uid "user-followers" database structure,
+                // selected user uid is removed from the currentUser "user-following" structure
+                REF_USER_FOLLOWERS.child(uid)
+                    .child(currentUid)
+                    .removeValue(completionBlock: completion)
+            }
+    }
+    
+    func checkIfUserIsFollowing(uid: String, completion: @escaping (Bool) -> Void) {
+        // getting a currentUser logged in user uid
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        // Check if selected user uid is already added to currentUser uid "user-following" structure
+        REF_USER_FOLLOWING.child(currentUid)
+            .child(uid)
+            .observeSingleEvent(of: .value) { snapshot in
+                completion(snapshot.exists())
+            }
     }
 }
 

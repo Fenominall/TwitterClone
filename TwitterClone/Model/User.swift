@@ -14,6 +14,7 @@ struct User {
     let username: String
     var profileImageUrl: URL?
     let uid: String
+    var isFollowed = false
     
     // Checking if the user is the current user
     var isCurrentUser: Bool {
