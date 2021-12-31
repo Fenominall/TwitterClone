@@ -15,6 +15,8 @@ struct User {
     var profileImageUrl: URL?
     let uid: String
     var isFollowed = false
+    // It`s options because this properties will be available only after a user is fetched
+    var stats: UserRelationStats?
     
     // Checking if the user is the current user
     var isCurrentUser: Bool {
@@ -36,4 +38,10 @@ struct User {
         }
       
     }
+}
+
+
+struct UserRelationStats {
+    var followers: Int
+    var following: Int
 }

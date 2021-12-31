@@ -48,10 +48,11 @@ class MainTabController: UITabBarController {
     // MARK: - Selectors
     @objc func actionButtonTapped() {
         guard let user = user else { return }
-        
+
         let uploadTweetController = UploadTweetsController(user: user)
         let uploadTweetNav = UINavigationController(rootViewController: uploadTweetController)
         uploadTweetNav.modalPresentationStyle = .fullScreen
+        print("Test")
         present(uploadTweetNav, animated: true, completion: nil)
     }
     

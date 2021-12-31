@@ -36,6 +36,7 @@ class ProfileController: UICollectionViewController {
         configureCollectionView()
         fetchTweets()
         checkIfUserIsFollowed()
+        fetchUserStats()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,14 +48,19 @@ class ProfileController: UICollectionViewController {
     // MARK: - API
     // fetching tweets for any user tweets by users` "uid"
     func fetchTweets() {
-        TweetService.shared.fetchTweets(forUser: user) { tweets in
-            self.tweets = tweets
-        }
+        TweetService.shared.fetchTweets(forUser: user) { self.tweets = $0 }
     }
     
     func checkIfUserIsFollowed() {
         UserService.shared.checkIfUserIsFollowing(uid: user.uid) { isFollowed in
             self.user.isFollowed = isFollowed
+            self.collectionView.reloadData()
+        }
+    }
+    
+    func fetchUserStats() {
+        UserService.shared.fetchUserStats(uid: user.uid) {
+            self.user.stats = $0
             self.collectionView.reloadData()
         }
     }
@@ -125,6 +131,12 @@ extension ProfileController: ProfileHeaderViewDelegate {
     // implementing the function to follow and unfollow a user
     func handleEditProfileFollow(_ header: ProfileHeaderView) {
         
+        //  if user.isCurrentUser then do not create following structure and just return
+        if user.isCurrentUser {
+            print("DEBUG: Show edit profile controller..")
+            return
+        }
+    
         if user.isFollowed {
             UserService.shared.unfollowUser(uid: user.uid) { [weak self] (error, reference) in
                 self?.user.isFollowed = false

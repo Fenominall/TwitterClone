@@ -29,12 +29,13 @@ struct ProfileHeaderViewModel {
     
     private let user: User
     
+    // updating followers label with followers count of the user
     var followersString: NSAttributedString? {
-        attributedButton(withValue: 0, text: " followers")
+        attributedButton(withValue: user.stats?.followers ?? 0, text: " followers")
     }
-    
+    // updating following label with following count of the user
     var followingString: NSAttributedString? {
-        attributedButton(withValue: 0, text: " following")
+        attributedButton(withValue: user.stats?.following ?? 0, text: " following")
     }
     
     var actionButtonTitle: String {
