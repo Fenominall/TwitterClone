@@ -86,8 +86,15 @@ extension FeedController {
         // access tweet property and setting it the fetched tweets to be a dataSource
         // Populating tweet cell, whenever the property gets set with the data received from the FeedController
         cell.tweet = tweets[indexPath.row]
+        
         return cell
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let controller = TweetDetailsController(tweet: tweets[indexPath.row])
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

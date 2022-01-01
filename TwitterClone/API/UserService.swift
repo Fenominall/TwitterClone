@@ -90,7 +90,8 @@ struct UserService {
             }
     }
     
-    func fetchUserStats(uid: String, completion: @escaping (UserRelationStats	) -> Void) {
+    /// Function that displays the count of followers and following for each user
+    func fetchUserStats(uid: String, completion: @escaping (UserRelationStats) -> Void) {
         // Accessing "user-followers" structure on the database
         // by provided uid to count all followers of the selected uid
         REF_USER_FOLLOWERS.child(uid).observeSingleEvent(of: .value) { snapshot in
