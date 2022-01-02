@@ -31,11 +31,11 @@ struct ProfileHeaderViewModel {
     
     // updating followers label with followers count of the user
     var followersString: NSAttributedString? {
-        attributedButton(withValue: user.stats?.followers ?? 0, text: " followers")
+        attributedText(withValue: user.stats?.followers ?? 0, text: " followers")
     }
     // updating following label with following count of the user
     var followingString: NSAttributedString? {
-        attributedButton(withValue: user.stats?.following ?? 0, text: " following")
+        attributedText(withValue: user.stats?.following ?? 0, text: " following")
     }
     
     var actionButtonTitle: String {
@@ -66,7 +66,7 @@ struct ProfileHeaderViewModel {
         self.user = user
     }
     
-    fileprivate func attributedButton(withValue value: Int, text: String) -> NSAttributedString {
+    fileprivate func attributedText(withValue value: Int, text: String) -> NSAttributedString {
         let attributedTitle = NSMutableAttributedString(string: "\(value)", attributes:
                                                             [.font: UIFont.boldSystemFont(ofSize: 14),
                                                              .foregroundColor: UIColor.black])

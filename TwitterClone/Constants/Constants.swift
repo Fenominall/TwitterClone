@@ -20,9 +20,10 @@ public struct Constants {
     static let lockImage = UIImage(named: "ic_lock_outline_white_2x")?.withRenderingMode(.alwaysOriginal)
     static let personImage = UIImage(named: "ic_person_outline_white_2x")
     static let plusPhotoImage = UIImage(named: "plus_photo")
-    static let commentsImage = UIImage(named: "comment")
-    static let retweetImage = UIImage(named: "retweet")
-    static let likeImage  = UIImage(named: "like")
-    static let shareImage = UIImage(named: "share")
+    static let commentsImage = UIImage(named: "comment")!
+    static let retweetImage = UIImage(named: "retweet")!
+    static let likeImage  = UIImage(named: "like")!
+    static let shareImage = UIImage(named: "share")!
     static let backButtonImage = UIImage(named: "baseline_arrow_back_white_24dp")?.withRenderingMode(.alwaysOriginal)
+    static let downArrowImage = UIImage(named: "down_arrow_24pt")
 }
