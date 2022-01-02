@@ -108,7 +108,7 @@ class TweetDetailsHeader: UICollectionReusableView {
     
     private lazy var retweetButton: UIButton = {
         let button = createButton(withImageName: Constants.retweetImage)
-        button.addTarget(self, action: #selector(handleRetweetTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleReplyTapped), for: .touchUpInside)
         return button
     }()
     
@@ -149,7 +149,7 @@ class TweetDetailsHeader: UICollectionReusableView {
         
     }
     
-    @objc private func handleRetweetTapped() {
+    @objc private func handleReplyTapped() {
         
     }
     
@@ -202,8 +202,8 @@ class TweetDetailsHeader: UICollectionReusableView {
         statsView.anchor(top: dateLabel.bottomAnchor,
                          left: leftAnchor,
                          right: rightAnchor,
-                         paddingTop: 20,
-                         height: 40.0)
+                         paddingTop: 12,
+                         height: 40)
         
         let actionsStack = UIStackView(arrangedSubviews: [commentButton,
                                                           retweetButton,
@@ -213,7 +213,6 @@ class TweetDetailsHeader: UICollectionReusableView {
         addSubview(actionsStack)
         actionsStack.centerX(inView: self)
         actionsStack.anchor(bottom: bottomAnchor,
-                            paddingTop: 8,
                             paddingBottom: 12)
     }
     

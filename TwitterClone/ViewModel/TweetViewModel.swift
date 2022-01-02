@@ -55,6 +55,15 @@ struct TweetViewModel {
                                                      .foregroundColor: UIColor.lightGray]))
         return title
     }
+
+    // MARK: - Lifecycle
+    // designated initializer for "User" and "Tweet" models
+    init(tweet: Tweet) {
+        self.tweet = tweet
+        self.user = tweet.user
+    }
+    
+    // MARK: - Helpers
     
     fileprivate func attributedText(withValue value: Int, text: String) -> NSAttributedString {
         let attributedTitle = NSMutableAttributedString(string: " \(value)", attributes:
@@ -66,10 +75,14 @@ struct TweetViewModel {
         return attributedTitle
     }
     
-    // MARK: - Lifecycle
-    // designated initializer for "User" and "Tweet" models
-    init(tweet: Tweet) {
-        self.tweet = tweet
-        self.user = tweet.user
+    func size(forWidth width: CGFloat) -> CGSize {
+        let measurementLabel = UILabel()
+        measurementLabel.text = tweet.caption
+        measurementLabel.numberOfLines = 0
+        measurementLabel.lineBreakMode = .byWordWrapping
+        measurementLabel.translatesAutoresizingMaskIntoConstraints = false
+        measurementLabel.widthAnchor.constraint(equalToConstant: width).isActive = true
+        return measurementLabel.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
     }
+    
 }

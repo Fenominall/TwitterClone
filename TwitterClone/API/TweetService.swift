@@ -12,7 +12,7 @@ import Firebase
 struct TweetService {
     static let shared = TweetService()
     
-    func uploadTweet(caption: String, completion: @escaping (Error?, DatabaseReference) -> Void) {
+    func uploadTweet(caption: String, type: UploadTweetConfiguration, completion: @escaping (Error?, DatabaseReference) -> Void) {
         // Get user uid from the database to need to know who made a tweet
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
@@ -22,17 +22,28 @@ struct TweetService {
                       "likes": 0,
                       "retweets": 0,
                       "caption": caption] as [String: Any]
-        // storing a reference to a tweet structures in Firebase database
-        let reference = REF_TWEETS.childByAutoId()
-        // By provided "uid" from the current-user, a new tweet structure with a unique "uid"
-        // and reference to a current-user "uid" will be created and uploaded to tweet structures tree in database
-        reference.updateChildValues(values) { (error, ref) in
-            // getting a created tweet by a key provided from
-            // a reference of uploaded tweets by a current-user "uid"
-            guard let tweetID = ref.key else { return }
-            // update user-tweet structure
-            REF_USER_TWEETS.child(uid).updateChildValues([tweetID: 1], withCompletionBlock: completion)
+        switch type {
+        case .tweet:
+            // storing a reference to a tweet structures in Firebase database
+            let reference = REF_TWEETS.childByAutoId()
+            // By provided "uid" from the current-user, a new tweet structure with a unique "uid"
+            // and reference to a current-user "uid" will be created and uploaded to tweet structures tree in database
+            reference.updateChildValues(values) { (error, ref) in
+                // getting a created tweet by a key provided from
+                // a reference of uploaded tweets by a current-user "uid"
+                guard let tweetID = ref.key else { return }
+                // update user-tweet structure
+                REF_USER_TWEETS.child(uid)
+                    .updateChildValues([tweetID: 1], withCompletionBlock: completion)
+            }
+        case .reply(let tweet):
+            // New autoID will be created for a new user-tweets structure with the same values as for
+            // the reference to replied tweet`s tweetID
+            REF_TWEETS_REPLIES.child(tweet.tweetID)
+                .childByAutoId().updateChildValues(values,
+                                                   withCompletionBlock: completion)
         }
+    
     }
     
     /// Fetching for all tweets of all users in the feed controller

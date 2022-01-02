@@ -31,6 +31,7 @@
 		4F6E095B276E7026004DA592 /* CachedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E095A276E7026004DA592 /* CachedImageView.swift */; };
 		4F6E095D276E707D004DA592 /* DiscardableImageCacheItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E095C276E707D004DA592 /* DiscardableImageCacheItem.swift */; };
 		4F713FCE276F75AA0060B893 /* CaptionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F713FCD276F75AA0060B893 /* CaptionTextView.swift */; };
+		4F7771EA27822B9300347906 /* UploadTweetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7771E927822B9300347906 /* UploadTweetViewModel.swift */; };
 		4F86DC7F27649B47004FFB5A /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F86DC7E27649B47004FFB5A /* AppColors.swift */; };
 		4F86DC8227649DB9004FFB5A /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F86DC8127649DB9004FFB5A /* LoginController.swift */; };
 		4F86DC8427649DF0004FFB5A /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F86DC8327649DF0004FFB5A /* RegistrationController.swift */; };
@@ -76,6 +77,7 @@
 		4F6E095A276E7026004DA592 /* CachedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedImageView.swift; sourceTree = "<group>"; };
 		4F6E095C276E707D004DA592 /* DiscardableImageCacheItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscardableImageCacheItem.swift; sourceTree = "<group>"; };
 		4F713FCD276F75AA0060B893 /* CaptionTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionTextView.swift; sourceTree = "<group>"; };
+		4F7771E927822B9300347906 /* UploadTweetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTweetViewModel.swift; sourceTree = "<group>"; };
 		4F86DC7E27649B47004FFB5A /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		4F86DC8127649DB9004FFB5A /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		4F86DC8327649DF0004FFB5A /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 			children = (
 				4F363C7727711621002B889F /* TweetViewModel.swift */,
 				4F3E83ED2777606A00E62ADC /* ProfileHeaderViewModel.swift */,
+				4F7771E927822B9300347906 /* UploadTweetViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				4FB7F656275D533D008F7AB7 /* Constants.swift in Sources */,
 				4F93710B27664D37007667F8 /* AuthService.swift in Sources */,
 				4F1CAF50276D21160034EBA3 /* UploadTweetsController.swift in Sources */,
+				4F7771EA27822B9300347906 /* UploadTweetViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
