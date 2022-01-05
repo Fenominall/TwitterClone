@@ -105,7 +105,7 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
         let tweetViewModel = TweetViewModel(tweet: tweets[indexPath.row])
         let height = tweetViewModel.size(forWidth: view.frame.width).height
         
-        return CGSize(width: view.frame.width, height: height + 72)
+        return CGSize(width: view.frame.width, height: height + 100)
     }
 }
 

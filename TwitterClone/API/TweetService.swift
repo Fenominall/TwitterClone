@@ -8,11 +8,14 @@
 import Foundation
 import Firebase
 
+typealias FetchTweetsCompletion = (([Tweet]) -> Void)
+
 // MARK: - Service for uploading tweets to Firebase database
 struct TweetService {
     static let shared = TweetService()
     
-    func uploadTweet(caption: String, type: UploadTweetConfiguration, completion: @escaping (Error?, DatabaseReference) -> Void) {
+    func uploadTweet(caption: String, type: UploadTweetConfiguration,
+                     completion: @escaping (DatabaseCompletion)) {
         // Get user uid from the database to need to know who made a tweet
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
@@ -37,17 +40,17 @@ struct TweetService {
                     .updateChildValues([tweetID: 1], withCompletionBlock: completion)
             }
         case .reply(let tweet):
-            // New autoID will be created for a new user-tweets structure with the same values as for
+            // New autoID will be created for a new tweet-replies structure with the same values as for
             // the reference to replied tweet`s tweetID
             REF_TWEETS_REPLIES.child(tweet.tweetID)
                 .childByAutoId().updateChildValues(values,
                                                    withCompletionBlock: completion)
         }
-    
+        
     }
     
     /// Fetching for all tweets of all users in the feed controller
-    func fetchTweets(completion: @escaping ([Tweet]) -> Void) {
+    func fetchTweets(completion: @escaping (FetchTweetsCompletion)) {
         var tweets: [Tweet] = []
         
         REF_TWEETS.observe(.childAdded) { snapshot in
@@ -71,7 +74,8 @@ struct TweetService {
     }
     
     /// Fetching for current user tweets in Users profile
-    func fetchTweets(forUser user: User, completion: @escaping ([Tweet]) -> Void) {
+    func fetchTweets(forUser user: User,
+                     completion: @escaping (FetchTweetsCompletion)) {
         var tweets: [Tweet] = []
         // fetching tweets for any user tweets by users` "uid"
         REF_USER_TWEETS.child(user.uid).observe(.childAdded) { snapshot in
@@ -90,6 +94,27 @@ struct TweetService {
                     tweets.append(tweet)
                     completion(tweets)
                 }
+            }
+        }
+    }
+    
+    /// Fetching user replies for tweets by uid
+    func fetchTweetsReplies(forTweet tweet: Tweet,
+                            completion: @escaping (FetchTweetsCompletion)) {
+        // creating new list of tweets to store tweet`s replies
+        var tweets: [Tweet] = []
+        // accessing "tweet-replies" database structure to find a tweet by ID
+        REF_TWEETS_REPLIES.child(tweet.tweetID).observe(.childAdded) { snapshot in
+            let tweetID = snapshot.key
+            // constructing a dictionary values for a tweet structure
+            guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
+            // getting a replied tweet UID reference
+            guard let uid = dictionary["uid"] as? String else { return }
+            
+            UserService.shared.fetchUser(uid: uid) { user in
+                let tweet = Tweet(user: user, tweetID: tweetID, dictionary: dictionary)
+                tweets.append(tweet)
+                completion(tweets)
             }
         }
     }
