@@ -18,6 +18,15 @@ class ActionSheetLauncher: NSObject {
     // Accessing UIWindow to show tableView on a separate UIWindow in UIViewController
     private var window: UIWindow?
     
+    private lazy var blackView: UIView = {
+        let view = UIView()
+        view.alpha = 0
+        // Getting faded color over the view
+        view.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleDismissal))
+        view.addGestureRecognizer(tap)
+        return view
+    }()
     
     // MARK: - Lifecycle
     init(user: User) {
@@ -27,17 +36,35 @@ class ActionSheetLauncher: NSObject {
         configureTableView()
     }
     
+    // MARK: - Selectors
+    // Dismissing with animation tableView and blackView when the user taps on the screen
+    @objc func handleDismissal() {
+        UIView.animate(withDuration: 0.5) {
+            self.blackView.alpha = 0
+            self.tableView.frame.origin.y += 300
+        }
+    }
+    
     // MARK: - Helpers
     func showSheet() {
         // Presenting UIWindow over all other views
         guard let window = UIApplication.shared.keyWindow else { return }
         
         self.window = window
+        window.addSubview(blackView)
+        blackView.frame = window.frame
         window.addSubview(tableView)
         tableView.frame = CGRect(x: 0,
-                                 y: window.frame.height - 300,
+                                 // set the black view to be the entire screen
+                                 y: window.frame.height,
                                  width: window.frame.width,
                                  height: 300)
+        // Animation to smoothly move tableView up on the set height in y
+        UIView.animate(withDuration: 0.5) {
+            self.blackView.alpha = 1
+            // with the animation table view will be moved up
+            self.tableView.frame.origin.y -= 300
+        }
     }
     
     func configureTableView() {
