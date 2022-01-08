@@ -130,7 +130,7 @@ class RegistrationController: UIViewController {
                                               profileImage: profileImage)
         // Registering the user to Firebase with input credentials
         AuthService.shared.registerUser(credentials: userCredentials) { (error, reference) in
-            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            guard let window = UIApplication.shared.keyWindow else { return }
             guard let tabController = window.rootViewController as? MainTabController else { return }
             tabController.authenticateUserAndConfigureUI()
             self.dismiss(animated: true, completion: nil)

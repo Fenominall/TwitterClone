@@ -21,7 +21,7 @@ class TweetDetailsController: UICollectionViewController {
     private var repliedTweets = [Tweet]() {
         didSet { collectionView.reloadData() }
     }
-    
+        
     // MARK: - Lifecycle
     init(tweet: Tweet) {
         self.tweet = tweet

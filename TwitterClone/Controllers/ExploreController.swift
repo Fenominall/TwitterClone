@@ -45,6 +45,7 @@ class ExploreController: UITableViewController {
     
     // MARK: - API
     private func fetchUsers() {
+        
         UserService.shared.fetchUsers { [weak self] users in
             self?.users = users
         }
