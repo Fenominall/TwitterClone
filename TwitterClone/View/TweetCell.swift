@@ -171,6 +171,7 @@ class TweetCell: UICollectionViewCell {
         
     }
     // MARK: - Helpers
+    
 
     func configure() {
         guard let tweet = tweet else { return }
@@ -178,8 +179,11 @@ class TweetCell: UICollectionViewCell {
         
         // configuring fetched tweet`s data with each tweet`s element
         captionLabel.text = tweet.caption
+        
         profileImageView.loadImage(withURL: tweetViewModel.profileImageURL as NSURL?)
         infoLabel.attributedText = tweetViewModel.userInfoText
         
+        likeButton.tintColor = tweetViewModel.likeButtonTintColor
+        likeButton.setImage(tweetViewModel.likeButtonImage, for: .normal)
     }
 }

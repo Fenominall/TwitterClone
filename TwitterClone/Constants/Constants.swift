@@ -23,6 +23,7 @@ public struct Constants {
     static let commentsImage = UIImage(named: "comment")!
     static let retweetImage = UIImage(named: "retweet")!
     static let likeImage  = UIImage(named: "like")!
+    static let likeImageFilled = UIImage(named: "like_filled")!
     static let shareImage = UIImage(named: "share")!
     static let backButtonImage = UIImage(named: "baseline_arrow_back_white_24dp")?.withRenderingMode(.alwaysOriginal)
     static let downArrowImage = UIImage(named: "down_arrow_24pt")

@@ -41,6 +41,8 @@
 		4F93710B27664D37007667F8 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F93710A27664D37007667F8 /* AuthService.swift */; };
 		4F96921B278027DE00E14880 /* TweetDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F96921A278027DE00E14880 /* TweetDetailsController.swift */; };
 		4F96921D27802B6400E14880 /* TweetDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F96921C27802B6400E14880 /* TweetDetailsHeader.swift */; };
+		4F992EC7278B54060077EE26 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F992EC6278B54060077EE26 /* Notification.swift */; };
+		4F992EC9278B573A0077EE26 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F992EC8278B573A0077EE26 /* NotificationService.swift */; };
 		4FB35AB92764B4110021F277 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB35AB82764B4110021F277 /* Utilities.swift */; };
 		4FB35ABB2764E4960021F277 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FB35ABA2764E4960021F277 /* GoogleService-Info.plist */; };
 		4FB7F64D275D4FD0008F7AB7 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F64C275D4FD0008F7AB7 /* FeedController.swift */; };
@@ -91,6 +93,8 @@
 		4F93710A27664D37007667F8 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		4F96921A278027DE00E14880 /* TweetDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetDetailsController.swift; sourceTree = "<group>"; };
 		4F96921C27802B6400E14880 /* TweetDetailsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetDetailsHeader.swift; sourceTree = "<group>"; };
+		4F992EC6278B54060077EE26 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		4F992EC8278B573A0077EE26 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		4FB35AB82764B4110021F277 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		4FB35ABA2764E4960021F277 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		4FB7F64C275D4FD0008F7AB7 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
@@ -174,6 +178,7 @@
 				4F2B2DCD276F94F90020F27A /* TweetService.swift */,
 				4FCB1823276BC58900388E96 /* UserService.swift */,
 				4F3E83EF277761A200E62ADC /* ImageService.swift */,
+				4F992EC8278B573A0077EE26 /* NotificationService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -226,6 +231,7 @@
 			children = (
 				4FCB1825276BCBB000388E96 /* User.swift */,
 				4F2B2DCF276F9AD70020F27A /* Tweet.swift */,
+				4F992EC6278B54060077EE26 /* Notification.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -421,6 +427,7 @@
 				4FCB1824276BC58900388E96 /* UserService.swift in Sources */,
 				4F96921B278027DE00E14880 /* TweetDetailsController.swift in Sources */,
 				4F713FCE276F75AA0060B893 /* CaptionTextView.swift in Sources */,
+				4F992EC9278B573A0077EE26 /* NotificationService.swift in Sources */,
 				4FF29DCE27862C0F00DB5215 /* ActionSheetLauncher.swift in Sources */,
 				4F6E095D276E707D004DA592 /* DiscardableImageCacheItem.swift in Sources */,
 				4F4EE53927726177002DC666 /* ProfileHeaderView.swift in Sources */,
@@ -438,6 +445,7 @@
 				4F4D9467275D13FB00650A93 /* MainTabController.swift in Sources */,
 				4F1EB5BE27772F27002C7C47 /* ProfileFilterCell.swift in Sources */,
 				4F4D944E275D12F900650A93 /* SceneDelegate.swift in Sources */,
+				4F992EC7278B54060077EE26 /* Notification.swift in Sources */,
 				4FB7F64D275D4FD0008F7AB7 /* FeedController.swift in Sources */,
 				4F62C7802763F1A200E08809 /* NSConstraintsExtension.swift in Sources */,
 				4FB7F656275D533D008F7AB7 /* Constants.swift in Sources */,

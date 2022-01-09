@@ -36,9 +36,24 @@ class FeedController: UICollectionViewController {
         navigationController?.navigationBar.isHidden = false
     }
     // MARK: - API
+    fileprivate func checkIfUserLikedTweet(_ tweets: [Tweet]) {
+        // with enumerated() you get access to each tweet`s indexPath on each iteration of fro loop
+        for (index, tweet) in tweets.enumerated() {
+            TweetService.shared.checkIfUserLikedTweet(tweet) { didLike in
+                // checking in the database if tweet was liked with the API call
+                guard didLike == true else { return }
+                // if didLike from API call is true tweet`s model didLike property is set to true
+                // tweet property`s didSet reload data and UI is updated
+                self.tweets[index].didLike = true
+            }
+        }
+    }
+    
     func fetchTweets() {
         TweetService.shared.fetchTweets { tweets in
             self.tweets = tweets
+            
+            self.checkIfUserLikedTweet(tweets)
         }
     }
     
@@ -121,6 +136,11 @@ extension FeedController: TweetCellDelegate {
             let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
             // after likes value updated on the Database, the data about likes updated on the client side to keep data in sync
             cell.tweet?.likes = likes
+            
+            // only upload notification if a tweet is being liked and didLike property is set to true
+            guard !tweet.didLike else { return }
+            NotificationService.shared.uploadNotification(type: .like,
+                                                          tweet: tweet)
         }
     }
     

@@ -148,6 +148,8 @@ extension ProfileController: ProfileHeaderViewDelegate {
                 self?.user.isFollowed = true
                 header.editProfileFollowButton.setTitle("Following", for: .normal)
                 self?.collectionView.reloadData()
+                // when a user starts being followed a notification about the following is sent
+                NotificationService.shared.uploadNotification(type: .follow, user: self?.user)
             }
         }
     }

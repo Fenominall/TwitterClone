@@ -55,6 +55,16 @@ struct TweetViewModel {
                                                      .foregroundColor: UIColor.lightGray]))
         return title
     }
+    
+    // changing the color of like button on the tweet if didLike is true
+    var likeButtonTintColor: UIColor {
+        return tweet.didLike ? .red : .lightGray
+    }
+    
+    var likeButtonImage: UIImage {
+        let imageName = tweet.didLike ? Constants.likeImageFilled : Constants.likeImage
+        return imageName
+    }
 
     // MARK: - Lifecycle
     // designated initializer for "User" and "Tweet" models

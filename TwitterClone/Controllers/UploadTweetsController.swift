@@ -93,6 +93,12 @@ class UploadTweetsController: UIViewController {
                 print("DEBUG: Failed to upload a tweet with error: \(error.localizedDescription)")
                 return
             }
+            
+            // Check if the state is in the reply configuration to get access to tweet properties
+            if case .reply(let tweet) = self?.tweetConfig {
+                // Uploading notification to notify the user about reply on the tweet
+                NotificationService.shared.uploadNotification(type: .reply, tweet: tweet)
+            }
             // After tweet is successfully uploaded navigation-controller dismiss the current view to controller
             self?.dismiss(animated: true, completion: nil)
         }

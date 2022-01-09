@@ -243,10 +243,11 @@ class TweetDetailsHeader: UICollectionReusableView {
         retweetsCountLabel.attributedText = tweetViewModel.retweetAttributedString
         likesCountLabel.attributedText = tweetViewModel.likesAttributedString
         profileImageView.loadImage(withURL: tweetViewModel.profileImageURL as NSURL?)
+        // coloring the tweet like button if didLike property is true
+        likesButton.tintColor = tweetViewModel.likeButtonTintColor
+        likesButton.setImage(tweetViewModel.likeButtonImage, for: .normal)
         
         
     }
-    
-    
-    
+
 }
