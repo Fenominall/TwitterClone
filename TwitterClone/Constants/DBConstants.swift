@@ -22,7 +22,9 @@ let REF_USER_TWEETS = DB_REF.child("user-tweets")
 // Creating two new structures for users-follows
 let REF_USER_FOLLOWING = DB_REF.child("user-following")
 let REF_USER_FOLLOWERS = DB_REF.child("user-followers")
-// 
+// // Creating two new structures for users-likes
+let REF_USER_LIKES = DB_REF.child("user-likes")
+let REF_TWEET_LIKES = DB_REF.child("tweet-likes")
 
 // Creating storage reference for images
 let STORAGE_REF = Storage.storage().reference()

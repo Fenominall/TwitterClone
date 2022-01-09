@@ -112,9 +112,16 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
 // MARK: - TweetCellDelegate
 extension FeedController: TweetCellDelegate {
     func handleLikeTapped(_ cell: TweetCell) {
-//        guard var tweet = cell.tweet else { return }
-        cell.tweet?.didLike.toggle()
-        print("DEBUG: Tweet is liked is \(cell.tweet?.didLike)")
+        // safely unwrapping the tweet from a cell
+        guard let tweet = cell.tweet else { return }
+        // Calling likeTweet func and passing unwrapped tweet
+        TweetService.shared.likeTweet(tweet: tweet) { (error, reference) in
+            cell.tweet?.didLike.toggle()
+            // settings the likes value on the "likes" property
+            let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
+            // after likes value updated on the Database, the data about likes updated on the client side to keep data in sync
+            cell.tweet?.likes = likes
+        }
     }
     
     func handleReplyTapped(_ cell: TweetCell) {

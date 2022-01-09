@@ -118,4 +118,22 @@ struct TweetService {
             }
         }
     }
+    
+    func likeTweet(tweet: Tweet, completion: @escaping (DatabaseCompletion)) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        // if tweet was liked and than it liked one more time
+        // the count for tweet.likes will be decreased 1 otherwise count increased by 1
+        let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
+        // settings the likes value on the "tweets" structure in Database
+        REF_TWEETS.child(tweet.tweetID).child("likes").setValue(likes)
+        
+        if tweet.didLike {
+            // remove like data from Firebase (unlike Tweet)
+        } else {
+            // add like data to Firebase (like Tweet)
+            REF_USER_LIKES.child(uid).updateChildValues([tweet.tweetID: 1]) { (error, reference) in
+                REF_TWEET_LIKES.child(tweet.tweetID).updateChildValues([uid: 1], withCompletionBlock: completion)
+            }
+        }
+    }
 }
