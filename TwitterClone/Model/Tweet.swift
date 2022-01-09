@@ -14,6 +14,7 @@ struct Tweet {
     let likes: Int
     var timestamp: Date!
     let retweetCount: Int
+    var didLike = false
     // Fetching user for a tweet
     // getting user for a corresponding tweet it belong to
     var user: User
