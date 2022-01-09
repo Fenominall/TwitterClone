@@ -16,7 +16,7 @@ struct Tweet {
     let retweetCount: Int
     // Fetching user for a tweet
     // getting user for a corresponding tweet it belong to
-    let user: User
+    var user: User
     
     init(user: User, tweetID: String, dictionary: [String: AnyObject]) {
         self.tweetID = tweetID

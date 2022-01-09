@@ -10,6 +10,10 @@ import UIKit
 class ActionSheetCell: UITableViewCell {
     
     // MARK: - Properties
+    var tweetOptions: ActionSheetOptions? {
+        didSet { configureOptions() }
+    }
+    
     private let optionImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -22,7 +26,6 @@ class ActionSheetCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
-        label.text = "Test Option"
         return label
     }()
     
@@ -48,5 +51,9 @@ class ActionSheetCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func configureOptions() {
+        titleLabel.text = tweetOptions?.description
     }
 }

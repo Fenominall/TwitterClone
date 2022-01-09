@@ -10,13 +10,26 @@ import UIKit
 
 private let reuseIdentifier = "ActionSheetCell"
 
+protocol ActionSheetLauncherDelegate: AnyObject {
+    func didSelectOption(option: ActionSheetOptions)
+}
+
+
 class ActionSheetLauncher: NSObject {
     
     // MARK: - Properties
+
+    
     private let user: User
+    // Make the property lazy to use actionSheetViewModel only when user is initialized
+    private lazy var actionSheetViewModel = ActionSheetViewModel(user: user)
+    
     private let tableView = UITableView()
     // Accessing UIWindow to show tableView on a separate UIWindow in UIViewController
     private var window: UIWindow?
+    weak var delegate: ActionSheetLauncherDelegate?
+    // Defining tableView height
+    private var tableViewHeight: CGFloat?
     
     private lazy var blackView: UIView = {
         let view = UIView()
@@ -54,7 +67,7 @@ class ActionSheetLauncher: NSObject {
         
         return view
     }()
-
+    
     // MARK: - Lifecycle
     init(user: User) {
         self.user = user
@@ -68,11 +81,21 @@ class ActionSheetLauncher: NSObject {
     @objc func handleDismissal() {
         UIView.animate(withDuration: 0.5) {
             self.blackView.alpha = 0
-            self.tableView.frame.origin.y += 300
+            self.showTableView(false)
         }
     }
     
     // MARK: - Helpers
+    
+    func showTableView(_ shouldShow: Bool) {
+        guard let window = window else { return }
+        guard let height = tableViewHeight else { return }
+        
+        let yCoordinate = shouldShow ? window.frame.height - height : window.frame.height
+        tableView.frame.origin.y = yCoordinate
+
+    }
+    
     func showSheet() {
         // Presenting UIWindow over all other views
         guard let window = UIApplication.shared.keyWindow else { return }
@@ -81,8 +104,10 @@ class ActionSheetLauncher: NSObject {
         window.addSubview(blackView)
         blackView.frame = window.frame
         window.addSubview(tableView)
-        // Defining tableView height for three elements
-        let height = CGFloat(3 * 60) + 100
+        // Defining tableView height based on the count of tweeterOptions + "100" for footerView
+        let height = CGFloat(actionSheetViewModel.tweetOptions.count * 60) + 100
+        self.tableViewHeight = height
+        // settings auto layout constraints for tableView
         tableView.frame = CGRect(x: 0,
                                  // set the black view to be the entire screen
                                  y: window.frame.height,
@@ -92,7 +117,7 @@ class ActionSheetLauncher: NSObject {
         UIView.animate(withDuration: 0.5) {
             self.blackView.alpha = 1
             // with the animation table view will be moved up
-            self.tableView.frame.origin.y -= height
+            self.showTableView(true)
         }
     }
     
@@ -113,11 +138,12 @@ class ActionSheetLauncher: NSObject {
 // MARK: - ActionSheetLauncher UITableViewDataSource
 extension ActionSheetLauncher: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return actionSheetViewModel.tweetOptions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! ActionSheetCell
+        cell.tweetOptions = actionSheetViewModel.tweetOptions[indexPath.row]
         return cell
     }
 }
@@ -131,5 +157,18 @@ extension ActionSheetLauncher: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 60
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // accessing tweetOptions by it`s indexPath
+        let option = actionSheetViewModel.tweetOptions[indexPath.row]
+        // when an option is selected didSelectOption will fire with the animation hide action sheet and perform actions
+        UIView.animate(withDuration: 0.5) {
+            self.blackView.alpha = 0
+            self.showTableView(false)
+        } completion: { _ in
+            self.delegate?.didSelectOption(option: option)
+        }
+
     }
 }
