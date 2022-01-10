@@ -47,4 +47,34 @@ struct NotificationService {
                 .updateChildValues(values)
         }
     }
+    
+    /// Fetching notifications from the Database
+    func fetchNotifications(completion: @escaping ([Notification]) -> ()) {
+        
+        // temporary container to store received notifications
+        var notifications: [Notification] = []
+        
+        // getting current user uid
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        // accessing "notifications" structure and all it`s child values in snapshot
+        REF_NOTIFICATIONS.child(uid).observe(.childAdded) { snapshot in
+            // creating a dictionary for received values from a snapshot
+            guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
+            // getting user uid from a notification`s structure
+            guard let uid = dictionary["uid"] as? String else { return }
+            // Fetching user by uid in notifications structure
+            UserService.shared.fetchUser(uid: uid) { user in
+                // creating a notification with the received user data and dictionary values to construct a notification
+                let notification = Notification(user: user, dictionary: dictionary)
+                // adding a notification to notifications array
+                notifications.append(notification)
+                // passing values to completion block where it`s data can be user later on
+                completion(notifications)
+            }
+            
+            
+            
+        }
+        
+    }
 }
