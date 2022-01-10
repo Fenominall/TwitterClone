@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3B64B7916D780C0B1873B03D /* Pods_TwitterClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9F0C2A699A9E1FAD3666953 /* Pods_TwitterClone.framework */; };
 		4F1128B6278CB2E50009C1BC /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1128B5278CB2E50009C1BC /* NotificationCell.swift */; };
+		4F1128B8278CC0A00009C1BC /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1128B7278CC0A00009C1BC /* NotificationsViewModel.swift */; };
 		4F163C7D278A04CC00C8CE10 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F163C7C278A04CC00C8CE10 /* UIApplicationExtension.swift */; };
 		4F163C7F278A101F00C8CE10 /* ActionSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F163C7E278A101F00C8CE10 /* ActionSheetCell.swift */; };
 		4F163C81278A239900C8CE10 /* ActionSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F163C80278A239900C8CE10 /* ActionSheetViewModel.swift */; };
@@ -60,6 +61,7 @@
 		11D57413B372532034C4643E /* Pods-TwitterClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterClone.debug.xcconfig"; path = "Target Support Files/Pods-TwitterClone/Pods-TwitterClone.debug.xcconfig"; sourceTree = "<group>"; };
 		1ACE9853BF92C45C18702CCE /* Pods-TwitterClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterClone.release.xcconfig"; path = "Target Support Files/Pods-TwitterClone/Pods-TwitterClone.release.xcconfig"; sourceTree = "<group>"; };
 		4F1128B5278CB2E50009C1BC /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
+		4F1128B7278CC0A00009C1BC /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		4F163C7C278A04CC00C8CE10 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		4F163C7E278A101F00C8CE10 /* ActionSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCell.swift; sourceTree = "<group>"; };
 		4F163C80278A239900C8CE10 /* ActionSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetViewModel.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				4F3E83ED2777606A00E62ADC /* ProfileHeaderViewModel.swift */,
 				4F7771E927822B9300347906 /* UploadTweetViewModel.swift */,
 				4F163C80278A239900C8CE10 /* ActionSheetViewModel.swift */,
+				4F1128B7278CC0A00009C1BC /* NotificationsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 				4F163C7F278A101F00C8CE10 /* ActionSheetCell.swift in Sources */,
 				4F3E83F0277761A200E62ADC /* ImageService.swift in Sources */,
 				4FB7F651275D5049008F7AB7 /* NotificationsController.swift in Sources */,
+				4F1128B8278CC0A00009C1BC /* NotificationsViewModel.swift in Sources */,
 				4F6E095B276E7026004DA592 /* CachedImageView.swift in Sources */,
 				4F39D93427653B9900149770 /* DBConstants.swift in Sources */,
 				4FB35AB92764B4110021F277 /* Utilities.swift in Sources */,

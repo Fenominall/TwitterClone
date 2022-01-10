@@ -11,6 +11,10 @@ import UIKit
 class NotificationCell: UITableViewCell {
     // MARK: - Properties
     
+    var notification: Notification? {
+        didSet { configure() }
+    }
+    
     private lazy var profileImageView: CachedImageView = {
         let imageView = CachedImageView()
         imageView.contentMode = .scaleAspectFit
@@ -28,7 +32,6 @@ class NotificationCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 1
         label.font = UIFont.systemFont(ofSize: 14)
-        label.text = "Test Nofitication"
         return label
     }()
     
@@ -63,5 +66,14 @@ class NotificationCell: UITableViewCell {
     }
     
     // MARK: - Helpers
-    
+    func configure() {
+        guard let notification = notification else { return }
+
+        let notificationViewModel = NotificationsViewModel(notification: notification)
+        profileImageView.loadImage(withURL: notificationViewModel.profileImageUrl as NSURL?)
+        notificationLabel.attributedText = notificationViewModel.notificationText
+        
+        
+        
+    }
 }
