@@ -32,7 +32,7 @@ struct NotificationService {
             // TweetID value will be added to "values" dictionary
             values["tweetID"] = tweet.tweetID
             // Accessing "notifications" structure in database and adding new
-            // accessing tweet.user.uid because notification will be sent to the usr on which tweet a like was added
+            // accessing tweet.user.uid because notification will be sent to the user on which tweet a like was added
             REF_NOTIFICATIONS.child(tweet.user.uid)
                 // generating new uid for notification structure
                 .childByAutoId()
