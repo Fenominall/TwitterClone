@@ -83,17 +83,23 @@ struct TweetService {
             // to go into tweet`s structure and find tweets uid to get the datas
             let tweetID = snapshot.key
             
-            REF_TWEETS.child(tweetID).observeSingleEvent(of: .value) { snapshot in
-                guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
-                guard let uid = dictionary["uid"] as? String else { return }
-                UserService.shared.fetchUser(uid: uid) { user in
-                    // Creating a tweet with the received data
-                    // Because a user reference is used to create a tweet I will be able to use user data for tweets
-                    let tweet = Tweet(user: user,tweetID: tweetID, dictionary:  dictionary)
-                    // adding a tweet to the tweets list
-                    tweets.append(tweet)
-                    completion(tweets)
-                }
+            self.fetchTweet(withTweetID: tweetID) { tweet in
+                tweets.append(tweet)
+                completion(tweets)
+            }
+        }
+    }
+    
+    /// Fetching a single tweet by tweetID, completion returns a constructed with a dictionary Tweet
+    func fetchTweet(withTweetID tweetID: String, completion: @escaping (Tweet) -> Void) {
+        REF_TWEETS.child(tweetID).observeSingleEvent(of: .value) { snapshot in
+            guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
+            guard let uid = dictionary["uid"] as? String else { return }
+            UserService.shared.fetchUser(uid: uid) { user in
+                // Creating a tweet with the received data
+                // Because a user reference is used to create a tweet I will be able to use user data for tweets
+                let tweet = Tweet(user: user,tweetID: tweetID, dictionary:  dictionary)
+                completion(tweet)
             }
         }
     }

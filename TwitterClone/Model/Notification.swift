@@ -16,9 +16,9 @@ enum NotificationType: Int {
 }
 
 struct Notification {
-    let tweetID: String?
+    var tweetID: String?
     var timestamp: Date!
-    let user: User
+    var user: User
     // Tweet is optional because a notification might not always be associated with Tweet
     var tweet: Tweet?
     var type: NotificationType!
@@ -26,7 +26,10 @@ struct Notification {
     init(user: User, dictionary: [String: AnyObject]) {
         self.user = user
         
-        self.tweetID = dictionary["tweetID"] as? String ?? ""
+        // It tweet is not being in a notification, then it`s set to nil
+        if let tweetID = dictionary["tweetID"] as? String {
+            self.tweetID = tweetID
+        }
         
         if let timeStamp = dictionary["timestamp"] as? Double {
             self.timestamp = Date(timeIntervalSince1970: timeStamp)
