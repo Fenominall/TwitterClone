@@ -123,7 +123,6 @@ extension NotificationsController {
 extension NotificationsController: NotificationCellDelegate {
     func didTapFollow(_ cell: NotificationCell) {
         guard let user = cell.notification?.user else { return }
-        
         if user.isFollowed {
             UserService.shared.unfollowUser(uid: user.uid) { (error, reference) in
                 cell.notification?.user.isFollowed = false

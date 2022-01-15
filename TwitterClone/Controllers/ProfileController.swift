@@ -16,10 +16,28 @@ class ProfileController: UICollectionViewController {
     // MARK: - Properties
     private var user: User
     
-    private var tweets: [Tweet] = [] {
+    // A default value is tweets because it always starts from tweets in ProfileController
+    private var selectedFilter: ProfileFilterOptions = .tweets {
         didSet { collectionView.reloadData() }
     }
     
+    // DataSources
+    private var tweetsDataSource: [Tweet] = []
+    
+    private var likedTweetsDataSource = [Tweet]()
+    private var repliesDataSource = [Tweet]()
+    
+    private var currentDataSource: [Tweet] {
+        switch selectedFilter {
+        case .tweets:
+            return tweetsDataSource
+        case .replies:
+            return repliesDataSource
+        case .likes:
+            return likedTweetsDataSource
+        }
+    }
+
     // MARK: - Lifecycle
     init(user: User) {
         self.user = user
@@ -48,7 +66,10 @@ class ProfileController: UICollectionViewController {
     // MARK: - API
     // fetching tweets for any user tweets by users` "uid"
     func fetchTweets() {
-        TweetService.shared.fetchTweets(forUser: user) { self.tweets = $0 }
+        TweetService.shared.fetchTweets(forUser: user) {
+            self.tweetsDataSource = $0
+            self.collectionView.reloadData()
+        }
     }
     
     func checkIfUserIsFollowed() {
@@ -87,12 +108,12 @@ class ProfileController: UICollectionViewController {
 
 extension ProfileController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tweets.count
+        return tweetsDataSource.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
-        cell.tweet = tweets[indexPath.row]
+        cell.tweet = tweetsDataSource[indexPath.row]
         return cell
     }
 }
