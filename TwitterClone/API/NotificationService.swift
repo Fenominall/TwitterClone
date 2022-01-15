@@ -51,7 +51,7 @@ struct NotificationService {
     /// Fetching notifications from the Database
     func fetchNotifications(completion: @escaping ([Notification]) -> ()) {
         
-        // temporary container to store received notifications
+        // temporary container to store received notifications`
         var notifications: [Notification] = []
         
         // getting current user uid

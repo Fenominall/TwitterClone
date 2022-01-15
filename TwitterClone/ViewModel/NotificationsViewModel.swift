@@ -16,9 +16,9 @@ struct NotificationsViewModel {
     
     private let type: NotificationType
     
+    // based on notification`s type a corresponded message will be shown
     var notificationMessage: String {
         switch type {
-            
         case .follow: return " started following you"
         case .like: return " liked your tweet"
         case .reply: return " replied to your tweet"
@@ -36,6 +36,7 @@ struct NotificationsViewModel {
         return formatter.string(from: notification.timestamp, to: timeNow) ?? "2m"
     }
     
+    /// Attributed notification text which contains "user.username" + "notificationMessage" + "timestamp" when actions was provided
     var notificationText: NSAttributedString? {
         guard let timestamp = timestampString else { return nil }
         let attributedText = NSMutableAttributedString(string: user.username,

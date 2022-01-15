@@ -16,7 +16,7 @@ class NotificationCell: UITableViewCell {
     // MARK: - Properties
     
     var notification: Notification? {
-        didSet { configure() }
+        didSet { configureNotification() }
     }
     
     weak var delegate: NotificationCellDelegate?
@@ -73,7 +73,7 @@ class NotificationCell: UITableViewCell {
         
         stack.anchor(right: rightAnchor,
                      paddingRight: 12)
-        
+        // Configuring follow button
         contentView.addSubview(followButton)
         followButton.centerY(inView: self)
         followButton.setDimensions(width: 92, height: 32)
@@ -96,7 +96,7 @@ class NotificationCell: UITableViewCell {
     }
     
     // MARK: - Helpers
-    func configure() {
+    func configureNotification() {
         guard let notification = notification else { return }
 
         let notificationViewModel = NotificationsViewModel(notification: notification)
