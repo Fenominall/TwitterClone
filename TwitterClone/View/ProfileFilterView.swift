@@ -10,7 +10,7 @@ import UIKit
 private let reuseIdentifier = "ProfileFilterCell"
 
 protocol ProfileFilterViewDelegate: AnyObject {
-    func animateFilterView(_ view: ProfileFilterView, didSelect indexPath: IndexPath)
+    func animateFilterView(_ view: ProfileFilterView, didSelect index: Int)
 }
 
 class ProfileFilterView: UIView {
@@ -78,14 +78,15 @@ extension ProfileFilterView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         let xPosition = cell?.frame.origin.x ?? 0
-        
+
         UIView.animate(withDuration: 0.3) {
             self.underlineView.frame.origin.x = xPosition
         }
-        filterDelegate?.animateFilterView(self, didSelect: indexPath)
+        print("DEBUG: Delegating action to profile header from filter bar...")
+        filterDelegate?.animateFilterView(self, didSelect: indexPath.row)
     }
 }
-
+ 
 // MARK: - UICollectionViewDataSource
 extension ProfileFilterView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

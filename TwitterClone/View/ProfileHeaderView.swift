@@ -11,6 +11,7 @@ import UIKit
 protocol ProfileHeaderViewDelegate: AnyObject {
     func handleDismissal()
     func handleEditProfileFollow(_ header: ProfileHeaderView)
+    func didSelectFilterOption(filter: ProfileFilterOptions)
 }
 
 // Create reusable header for profile controller
@@ -197,7 +198,11 @@ class ProfileHeaderView: UICollectionReusableView {
 
 // MARK: - ProfileFilterViewDelegate
 extension ProfileHeaderView: ProfileFilterViewDelegate {
-    func animateFilterView(_ view: ProfileFilterView, didSelect indexPath: IndexPath) {
-
+    func animateFilterView(_ view: ProfileFilterView, didSelect index: Int) {
+        // Getting the indexPath of a selected filter option in profileFilterView
+        guard let filter = ProfileFilterOptions(rawValue: index) else { return }
+        print("DEBUG: Delegated action from Profile Header to profileController with \(filter.description)")
+        // Setting a selected filter option
+        delegate?.didSelectFilterOption(filter: filter)
     }
 }

@@ -23,9 +23,8 @@ class ProfileController: UICollectionViewController {
     
     // DataSources
     private var tweetsDataSource: [Tweet] = []
-    
-    private var likedTweetsDataSource = [Tweet]()
     private var repliesDataSource = [Tweet]()
+    private var likedTweetsDataSource = [Tweet]()
     
     private var currentDataSource: [Tweet] {
         switch selectedFilter {
@@ -108,12 +107,12 @@ class ProfileController: UICollectionViewController {
 
 extension ProfileController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tweetsDataSource.count
+        return currentDataSource.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
-        cell.tweet = tweetsDataSource[indexPath.row]
+        cell.tweet = currentDataSource[indexPath.row]
         return cell
     }
 }
@@ -149,6 +148,11 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - ProfileHeaderViewDelegate
 extension ProfileController: ProfileHeaderViewDelegate {
+    func didSelectFilterOption(filter: ProfileFilterOptions) {
+        print("DEBUG: Selected filter \(filter.description)")
+        self.selectedFilter = filter
+    }
+    
     // implementing the function to follow and unfollow a user
     func handleEditProfileFollow(_ header: ProfileHeaderView) {
         
