@@ -96,6 +96,8 @@ class ProfileController: UICollectionViewController {
     func fetchReplies() {
         TweetService.shared.fetchTweetsReplies(forUser: user) { [weak self] tweets in
             self?.repliesDataSource = tweets
+            
+            self?.repliesDataSource.forEach({ print($0.replyingTo as Any) })
         }
     }
     

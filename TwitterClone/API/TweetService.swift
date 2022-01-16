@@ -20,7 +20,7 @@ struct TweetService {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         // Structure for uploading to database as a single tweet
-        let values = ["uid": uid,
+        var values = ["uid": uid,
                       "timestamp": Int(NSDate().timeIntervalSince1970),
                       "likes": 0,
                       "retweets": 0,
@@ -40,6 +40,8 @@ struct TweetService {
                     .updateChildValues([tweetID: 1], withCompletionBlock: completion)
             }
         case .reply(let tweet):
+            // gives a username of a person who made the original tweet
+            values["replyingTo"] = tweet.user.username
             // New autoID will be created for a new tweet-replies structure with the same values as for
             // the reference to replied tweet`s tweetID
             REF_TWEETS_REPLIES.child(tweet.tweetID)

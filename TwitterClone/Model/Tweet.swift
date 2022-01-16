@@ -17,6 +17,7 @@ struct Tweet {
     // Fetching user for a tweet
     // getting user for a corresponding tweet it belong to
     var user: User
+    var replyingTo: String?
     
     init(user: User, tweetID: String, dictionary: [String: AnyObject]) {
         self.tweetID = tweetID
@@ -28,6 +29,10 @@ struct Tweet {
         
         if let timestamp = dictionary["timestamp"] as? Double {
             self.timestamp = Date(timeIntervalSince1970: timestamp)
+        }
+        
+        if let replyingTo = dictionary["replyingTo"] as? String {
+            self.replyingTo = replyingTo
         }
     }
     
