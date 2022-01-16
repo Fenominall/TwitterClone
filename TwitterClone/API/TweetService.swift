@@ -52,33 +52,44 @@ struct TweetService {
                     // structure is gonna be storing (user uid, replied tweet uid and a value as a key of replied tweet)
                     REF_USER_REPLIES.child(uid)
                         .updateChildValues([tweet.tweetID: replyKey],
-                                                                  withCompletionBlock: completion)
+                                           withCompletionBlock: completion)
                 }
         }
         
     }
     
-    /// Fetching for all tweets of all users in the feed controller
+    /// Fetching tweets of all users the current user is following and the current user tweets
     func fetchTweets(completion: @escaping (FetchTweetsCompletion)) {
+        // list to store received tweets
         var tweets: [Tweet] = []
+        // Getting current user uid
+        guard let currentUserUid = Auth.auth().currentUser?.uid else { return }
         
-        REF_TWEETS.observe(.childAdded) { snapshot in
-            // Constructing a fetched tweet structure into dictionary
-            guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
-            // Getting uid key from a tweet
+        // #Fetching all following users tweets# //
+        // Access "user-following" structure in the database and all it`s child in 'snapshot'
+        REF_USER_FOLLOWING.child(currentUserUid).observe(.childAdded) { snapshot in
+            // getting a single following user uid
+            let receivedFollowingUid = snapshot.key
+            // accessing "user-tweets" of a following user by provided uid in 'receivedUid' to observe all tweets Childs added of a following user
+            REF_USER_TWEETS.child(receivedFollowingUid).observe(.childAdded) { snapshot in
+                // getting each tweet`s uid in a following users "user-tweets" structure the current user follows
+                let tweetID = snapshot.key
+                // fetching the data of a tweet by tweetID, constructing a tweet
+                self.fetchTweet(withTweetID: tweetID) { tweet in
+                    tweets.append(tweet)
+                    completion(tweets)
+                }
+            }
+        }
+        // #Fetching all current user tweets# //
+        REF_USER_TWEETS.child(currentUserUid).observe(.childAdded) { snapshot in
+            // getting each tweet`s uid in of a current user
             let tweetID = snapshot.key
-            // getting a user unique id reference from the database
-            guard let uid = dictionary["uid"] as? String else { return }
-            // Fetching user by received uid to get the corresponding data
-            UserService.shared.fetchUser(uid: uid) { user in
-                // Creating a tweet with the received data
-                // Because a user reference is used to create a tweet I will be able to use user data for tweets
-                let tweet = Tweet(user: user,tweetID: tweetID, dictionary:  dictionary)
-                // adding a tweet to the tweets list
+            // fetching the data of a tweet by tweetID, constructing a tweet
+            self.fetchTweet(withTweetID: tweetID) { tweet in
                 tweets.append(tweet)
                 completion(tweets)
             }
-            
         }
     }
     
@@ -220,11 +231,11 @@ struct TweetService {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         // Access user uid in user-likes structure
         REF_USER_LIKES.child(currentUid)
-            // searching all user-likes
+        // searching all user-likes
             .child(tweet.tweetID)
-            // observing all the value and return bool if it exists or not
+        // observing all the value and return bool if it exists or not
             .observeSingleEvent(of: .value) { snapshot in
                 completion(snapshot.exists())
-        }
+            }
     }
 }

@@ -35,6 +35,12 @@ class FeedController: UICollectionViewController {
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.isHidden = false
     }
+    
+    // MARK: - Selectors
+    @objc private func handleRefresh() {
+        fetchTweets()
+    }
+    
     // MARK: - API
     fileprivate func checkIfUserLikedTweet(_ tweets: [Tweet]) {
         // with enumerated() you get access to each tweet`s indexPath on each iteration of fro loop
@@ -50,11 +56,17 @@ class FeedController: UICollectionViewController {
     }
     
     func fetchTweets() {
-        TweetService.shared.fetchTweets { tweets in
-            self.tweets = tweets
-            
-            self.checkIfUserLikedTweet(tweets)
+        collectionView.refreshControl?.beginRefreshing()
+        TweetService.shared.fetchTweets { [weak self] tweets in
+            self?.tweets = tweets
+            self?.checkIfUserLikedTweet(tweets)
+            // sorting received tweets by date from newest to oldest
+            self?.tweets = tweets.sorted(by: { $0.timestamp > $1.timestamp })
+            // after data fetched and sorted refreshControl stops refreshing
+            self?.collectionView.refreshControl?.endRefreshing()
         }
+        // If user does not have tweets yet, refreshControl ends.
+        collectionView.refreshControl?.endRefreshing()
     }
     
     // MARK: - Helpers
@@ -68,6 +80,10 @@ class FeedController: UICollectionViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.setDimensions(width: 44, height: 44)
         navigationItem.titleView = imageView
+        
+        let refreshControl = UIRefreshControl()
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         
     }
     

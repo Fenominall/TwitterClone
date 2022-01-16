@@ -44,13 +44,15 @@ class NotificationsController: UITableViewController {
         refreshControl?.beginRefreshing()
         // Fetching for all user`s notifications
         NotificationService.shared.fetchNotifications { [weak self] notifications in
-            // Once data received refresh control stops refreshing
-            self?.refreshControl?.endRefreshing()
             // assigning the values to be stored in notifications array to be used further
             self?.notifications = notifications
             // checking if a user is follow to display a correct-label for follow button
             self?.checkIfUserIsFollowed(notifications: notifications)
+            // Once data received refresh control stops refreshing
+            self?.refreshControl?.endRefreshing()
         }
+        // If user does not have notification yet, refreshControl ends.
+        refreshControl?.endRefreshing()
     }
     
     /// logic to determine if user is followed or not to display the correct followButton`s label text
