@@ -54,6 +54,7 @@ class ProfileController: UICollectionViewController {
         fetchTweets()
         checkIfUserIsFollowed()
         fetchUserStats()
+        fetchLikedTweets()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,23 +66,29 @@ class ProfileController: UICollectionViewController {
     // MARK: - API
     // fetching tweets for any user tweets by users` "uid"
     func fetchTweets() {
-        TweetService.shared.fetchTweets(forUser: user) {
-            self.tweetsDataSource = $0
-            self.collectionView.reloadData()
+        TweetService.shared.fetchTweets(forUser: user) { [weak self] in
+            self?.tweetsDataSource = $0
+            self?.collectionView.reloadData()
         }
     }
     
     func checkIfUserIsFollowed() {
-        UserService.shared.checkIfUserIsFollowing(uid: user.uid) { isFollowed in
-            self.user.isFollowed = isFollowed
-            self.collectionView.reloadData()
+        UserService.shared.checkIfUserIsFollowing(uid: user.uid) { [weak self] isFollowed in
+            self?.user.isFollowed = isFollowed
+            self?.collectionView.reloadData()
         }
     }
     
     func fetchUserStats() {
-        UserService.shared.fetchUserStats(uid: user.uid) {
-            self.user.stats = $0
-            self.collectionView.reloadData()
+        UserService.shared.fetchUserStats(uid: user.uid) { [weak self] in
+            self?.user.stats = $0
+            self?.collectionView.reloadData()
+        }
+    }
+    
+    func fetchLikedTweets() {
+        TweetService.shared.fetchLikes(forUser: user) { [weak self] tweets in
+            self?.likedTweetsDataSource = tweets
         }
     }
     
@@ -100,6 +107,9 @@ class ProfileController: UICollectionViewController {
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: headerReuseIdentified)
         
+        //adjusting space of collectionView
+        guard let tabHeight = tabBarController?.tabBar.frame.height else { return }
+        collectionView.contentInset.bottom = tabHeight
     }
 }
 
@@ -137,19 +147,21 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: view.frame.width, height: 350)
     }
     
-    
+    // adjusting tweet`s size in a collectionView cell
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let tweetViewModel = TweetViewModel(tweet: tweetsDataSource[indexPath.row])
+        let height = tweetViewModel.size(forWidth: view.frame.width).height
         
-        return CGSize(width: view.frame.width, height: 120)
+        return CGSize(width: view.frame.width, height: height + 100)
     }
+
 }
 
 // MARK: - ProfileHeaderViewDelegate
 extension ProfileController: ProfileHeaderViewDelegate {
     func didSelectFilterOption(filter: ProfileFilterOptions) {
-        print("DEBUG: Selected filter \(filter.description)")
         self.selectedFilter = filter
     }
     

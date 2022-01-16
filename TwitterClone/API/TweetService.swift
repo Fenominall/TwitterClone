@@ -125,6 +125,31 @@ struct TweetService {
         }
     }
     
+    /// Fetching user`s likes from Database
+    func fetchLikes(forUser user: User, completion: @escaping (FetchTweetsCompletion)) {
+        // creating new list of tweets to store tweets` likes
+        var tweets = [Tweet]()
+        // Accessing "user-likes" structure in the database:
+        // - Find a user by a uid
+        // - Taking all likes on the user provided in the snapshot
+        REF_USER_LIKES.child(user.uid).observe(.childAdded) { snapshot in
+            // retrieving tweet`s ID
+            let tweetID = snapshot.key
+            // fetching a tweet in a "tweets" structure by tweetID
+            self.fetchTweet(withTweetID: tweetID) { receivedTweet in
+                // creating a mutable copy of receivedTweet to be able to modify it
+                var tweet = receivedTweet
+                // after liked tweets were fetched, setting didLike to true, so that all liked tweets` like label will be shown as red
+                tweet.didLike = true
+                // adding each received tweet to tweets list
+                tweets.append(tweet)
+                // returning tweets list in a completion that can be used later
+                completion(tweets)
+            }
+        }
+    }
+    
+    
     func likeTweet(tweet: Tweet, completion: @escaping (DatabaseCompletion)) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         // if tweet was liked and than it liked one more time

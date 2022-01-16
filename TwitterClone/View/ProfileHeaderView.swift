@@ -201,7 +201,6 @@ extension ProfileHeaderView: ProfileFilterViewDelegate {
     func animateFilterView(_ view: ProfileFilterView, didSelect index: Int) {
         // Getting the indexPath of a selected filter option in profileFilterView
         guard let filter = ProfileFilterOptions(rawValue: index) else { return }
-        print("DEBUG: Delegated action from Profile Header to profileController with \(filter.description)")
         // Setting a selected filter option
         delegate?.didSelectFilterOption(filter: filter)
     }

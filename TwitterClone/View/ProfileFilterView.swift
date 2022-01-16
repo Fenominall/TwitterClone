@@ -82,7 +82,6 @@ extension ProfileFilterView: UICollectionViewDelegate {
         UIView.animate(withDuration: 0.3) {
             self.underlineView.frame.origin.x = xPosition
         }
-        print("DEBUG: Delegating action to profile header from filter bar...")
         filterDelegate?.animateFilterView(self, didSelect: indexPath.row)
     }
 }
