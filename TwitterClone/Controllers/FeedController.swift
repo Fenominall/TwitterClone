@@ -42,15 +42,17 @@ class FeedController: UICollectionViewController {
     }
     
     // MARK: - API
-    fileprivate func checkIfUserLikedTweet(_ tweets: [Tweet]) {
+    fileprivate func checkIfUserLikedTweet() {
         // with enumerated() you get access to each tweet`s indexPath on each iteration of fro loop
-        for (index, tweet) in tweets.enumerated() {
+        self.tweets.forEach { tweet in
             TweetService.shared.checkIfUserLikedTweet(tweet) { didLike in
                 // checking in the database if tweet was liked with the API call
                 guard didLike == true else { return }
                 // if didLike from API call is true tweet`s model didLike property is set to true
                 // tweet property`s didSet reload data and UI is updated
-                self.tweets[index].didLike = true
+                if let index = self.tweets.firstIndex(where: { $0.tweetID == tweet.tweetID }) {
+                    self.tweets[index].didLike = true
+                }
             }
         }
     }
@@ -58,10 +60,9 @@ class FeedController: UICollectionViewController {
     func fetchTweets() {
         collectionView.refreshControl?.beginRefreshing()
         TweetService.shared.fetchTweets { [weak self] tweets in
-            self?.tweets = tweets
-            self?.checkIfUserLikedTweet(tweets)
             // sorting received tweets by date from newest to oldest
             self?.tweets = tweets.sorted(by: { $0.timestamp > $1.timestamp })
+            self?.checkIfUserLikedTweet()
             // after data fetched and sorted refreshControl stops refreshing
             self?.collectionView.refreshControl?.endRefreshing()
         }
@@ -80,7 +81,7 @@ class FeedController: UICollectionViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.setDimensions(width: 44, height: 44)
         navigationItem.titleView = imageView
-        
+        // Adding a refresh control to refresh user data
         let refreshControl = UIRefreshControl()
         collectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
