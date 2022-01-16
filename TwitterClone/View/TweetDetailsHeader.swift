@@ -34,6 +34,13 @@ class TweetDetailsHeader: UICollectionReusableView {
         return imageView
     }()
     
+    private let replyLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .lightGray
+        return label
+    }()
+    
     private lazy var fullNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
@@ -170,7 +177,6 @@ class TweetDetailsHeader: UICollectionReusableView {
     
     // MARK: - Helpers
     func configureUI() {
-        
         let labelStack = UIStackView(arrangedSubviews: [fullNameLabel,
                                                         usernameLabel])
         labelStack.axis = .vertical
@@ -180,13 +186,19 @@ class TweetDetailsHeader: UICollectionReusableView {
                                                               labelStack])
         imageLabelStack.spacing = 12
         
-        addSubview(imageLabelStack)
-        imageLabelStack.anchor(top: topAnchor,
+        let fullDetailsStack = UIStackView(arrangedSubviews: [replyLabel,
+                                                              imageLabelStack])
+        fullDetailsStack.axis = .vertical
+        fullDetailsStack.distribution = .fill
+        fullDetailsStack.spacing = 8
+        
+        addSubview(fullDetailsStack)
+        fullDetailsStack.anchor(top: topAnchor,
                                left: leftAnchor,
                                paddingTop: 16, paddingLeft: 16)
         
         addSubview(captionLabel)
-        captionLabel.anchor(top: imageLabelStack.bottomAnchor,
+        captionLabel.anchor(top: fullDetailsStack.bottomAnchor,
                             left: leftAnchor,
                             right: rightAnchor,
                             paddingTop: 20,
@@ -246,8 +258,8 @@ class TweetDetailsHeader: UICollectionReusableView {
         // coloring the tweet like button if didLike property is true
         likesButton.tintColor = tweetViewModel.likeButtonTintColor
         likesButton.setImage(tweetViewModel.likeButtonImage, for: .normal)
-        
-        
+        // Showing a username to whom reply was addressed
+        replyLabel.text = tweetViewModel.whoRepliedText
+        replyLabel.isHidden = tweetViewModel.shouldHideReplyLabel
     }
-
 }

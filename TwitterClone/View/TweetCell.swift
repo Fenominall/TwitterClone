@@ -37,6 +37,13 @@ class TweetCell: UICollectionViewCell {
         return imageView
     }()
     
+    private let replyLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
+    
     private let captionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
@@ -117,20 +124,30 @@ class TweetCell: UICollectionViewCell {
         
         backgroundColor = .white
         
-        addSubview(profileImageView)
-        profileImageView.anchor(top: topAnchor,
-                                left: leftAnchor,
-                                paddingTop: 8,
-                                paddingLeft: 8)
+        // 1
+        let imageCaptionStack = UIStackView(arrangedSubviews: [profileImageView,
+                                                               infoStackView])
+        imageCaptionStack.distribution = .fillProportionally
+        imageCaptionStack.spacing = 12
+        imageCaptionStack.alignment = .leading
+        // 2
+        let imageCaptionStackWithReply = UIStackView(arrangedSubviews: [replyLabel,
+                                                                        imageCaptionStack])
+        imageCaptionStackWithReply.axis = .vertical
+        imageCaptionStackWithReply.distribution = .fillProportionally
+        imageCaptionStackWithReply.spacing = 8
         
-        infoLabel.font = UIFont.systemFont(ofSize: 14)
-        
-        addSubview(infoStackView)
-        infoStackView.anchor(top: profileImageView.topAnchor,
-                             left: profileImageView.rightAnchor,
+        addSubview(imageCaptionStackWithReply)
+        imageCaptionStackWithReply.anchor(top: topAnchor,
+                             left: leftAnchor,
                              right: rightAnchor,
+                             paddingTop: 4,
                              paddingLeft: 12,
                              paddingRight: 12)
+        // By default replyLabel is hidden
+        replyLabel.isHidden = true
+        // Setting a font size of infoLabel(Full name and username)
+        infoLabel.font = UIFont.systemFont(ofSize: 14)
         
         addSubview(underlineView)
         underlineView.anchor(left: leftAnchor,
@@ -139,7 +156,8 @@ class TweetCell: UICollectionViewCell {
                              height: 1)
         
         addSubview(actionStack)
-        actionStack.anchor(top: infoStackView.bottomAnchor, paddingTop: 30)
+        actionStack.anchor(top: imageCaptionStackWithReply.bottomAnchor,
+                           paddingTop: 30)
         actionStack.anchor(left: leftAnchor,
                            right: rightAnchor,
                            paddingLeft: 45,
@@ -185,5 +203,8 @@ class TweetCell: UICollectionViewCell {
         
         likeButton.tintColor = tweetViewModel.likeButtonTintColor
         likeButton.setImage(tweetViewModel.likeButtonImage, for: .normal)
+        
+        replyLabel.isHidden = tweetViewModel.shouldHideReplyLabel
+        replyLabel.text = tweetViewModel.whoRepliedText
     }
 }

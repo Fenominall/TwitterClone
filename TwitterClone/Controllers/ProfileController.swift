@@ -96,8 +96,6 @@ class ProfileController: UICollectionViewController {
     func fetchReplies() {
         TweetService.shared.fetchTweetsReplies(forUser: user) { [weak self] tweets in
             self?.repliesDataSource = tweets
-            
-            self?.repliesDataSource.forEach({ print($0.replyingTo as Any) })
         }
     }
     
@@ -148,6 +146,12 @@ extension ProfileController {
         header.user = user
         return header
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let controller = TweetDetailsController(tweet: currentDataSource[indexPath.row])
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -162,9 +166,13 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let tweetViewModel = TweetViewModel(tweet: currentDataSource[indexPath.row])
-        let height = tweetViewModel.size(forWidth: view.frame.width).height
+        var height = tweetViewModel.size(forWidth: view.frame.width).height + 72
         
-        return CGSize(width: view.frame.width, height: height + 100)
+        if currentDataSource[indexPath.row].isReply {
+            height += 20
+        }
+        
+        return CGSize(width: view.frame.width, height: height)
     }
 
 }

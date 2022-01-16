@@ -66,6 +66,17 @@ struct TweetViewModel {
         return imageName
     }
 
+    // if tweet is replied label is shown otherwise it`s hidden
+    var shouldHideReplyLabel: Bool {
+        return !tweet.isReply
+    }
+    
+    // Will display username of a person who replied to a tweet
+    var whoRepliedText: String {
+        guard let username = tweet.replyingTo else { return "" }
+        return "→ Replying to @\(username)"
+    }
+    
     // MARK: - Lifecycle
     // designated initializer for "User" and "Tweet" models
     init(tweet: Tweet) {
@@ -94,5 +105,4 @@ struct TweetViewModel {
         measurementLabel.widthAnchor.constraint(equalToConstant: width).isActive = true
         return measurementLabel.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
     }
-    
 }

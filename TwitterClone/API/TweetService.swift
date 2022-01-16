@@ -131,13 +131,15 @@ struct TweetService {
                     guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
                     // getting uid from a snapshot which is a user uid (who made reply)
                     guard let uid = dictionary["uid"] as? String else { return }
+                    // Getting uid of a reply
+                    let replyID = snapshot.key
                     // Fetching all tweets in "tweet-replies" by provided user uid
                     UserService.shared.fetchUser(uid: uid) { user in
                         // Creating-a new tweet
-                        let tweet = Tweet(user: user,
-                                          tweetID: tweetID,
+                        let reply = Tweet(user: user,
+                                          tweetID: replyID,
                                           dictionary: dictionary)
-                        replies.append(tweet)
+                        replies.append(reply)
                         completion(replies)
                     }
                 }

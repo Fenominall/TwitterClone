@@ -18,6 +18,8 @@ struct Tweet {
     // getting user for a corresponding tweet it belong to
     var user: User
     var replyingTo: String?
+    // for replies label
+    var isReply: Bool { return replyingTo != nil }
     
     init(user: User, tweetID: String, dictionary: [String: AnyObject]) {
         self.tweetID = tweetID
