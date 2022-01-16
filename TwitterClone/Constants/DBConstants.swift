@@ -27,9 +27,13 @@ let REF_USER_LIKES = DB_REF.child("user-likes")
 let REF_TWEET_LIKES = DB_REF.child("tweet-likes")
 // Creating a new structure for notification
 let REF_NOTIFICATIONS = DB_REF.child("notifications")
-
+// Creating a new structure for user-replies
+let REF_USER_REPLIES = DB_REF.child("user-replies")
 
 // Creating storage reference for images
 let STORAGE_REF = Storage.storage().reference()
 let STORAGE_PROFILE_IMAGES = STORAGE_REF.child("profile_images")
 
+
+// Database link
+// https://console.firebase.google.com/u/1/project/twitterclone-4f9c1/database/twitterclone-4f9c1-default-rtdb/data
