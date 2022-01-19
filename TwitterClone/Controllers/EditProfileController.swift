@@ -10,6 +10,8 @@ import UIKit
 class EditProfileController: UITableViewController {
     // MARK: - Properties
     private let user: User
+    private lazy var headerView = EditProfileHeader(user: user)
+    
     // MARK: - Lifecycle
     init(user: User) {
         self.user = user
@@ -23,6 +25,7 @@ class EditProfileController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
+        configureTableView()
     }
     // MARK: - Selectors
     @objc func handleCancel() {
@@ -35,7 +38,13 @@ class EditProfileController: UITableViewController {
     // MARK: - API
     // MARK: - Helpers
     func configureNavigationBar() {
-        navigationController?.navigationBar.barTintColor = .twitterBlue
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = .twitterBlue
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+     
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.tintColor = .white
@@ -46,5 +55,20 @@ class EditProfileController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleSaveData))
         navigationItem.rightBarButtonItem?.isEnabled = false
     }
+    
+    func configureTableView() {
+        tableView.tableHeaderView = headerView
+        headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 180)
+        tableView.tableFooterView = UIView()
+        
+        headerView.delegate = self
+    }
+}
 
+extension EditProfileController: EditProfileHeaderDelegate {
+    func didTapChangeProfilePhoto() {
+        print("DEBUG IT~S WORKING")
+    }
+    
+    
 }
