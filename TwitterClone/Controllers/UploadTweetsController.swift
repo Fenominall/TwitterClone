@@ -45,7 +45,6 @@ class UploadTweetsController: UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .lightGray
-        label.text = "replying to @spiderman"
         label.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         return label
     }()

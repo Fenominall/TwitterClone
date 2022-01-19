@@ -188,7 +188,10 @@ extension ProfileController: ProfileHeaderViewDelegate {
         
         //  if user.isCurrentUser then do not create following structure and just return
         if user.isCurrentUser {
-            print("DEBUG: Show edit profile controller..")
+            let editProfileController = EditProfileController(user: user)
+            let nav = UINavigationController(rootViewController: editProfileController)
+            nav.modalPresentationStyle = .fullScreen
+            present(nav, animated: true, completion: nil)
             return
         }
     
