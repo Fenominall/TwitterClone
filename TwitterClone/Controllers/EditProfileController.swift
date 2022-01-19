@@ -7,6 +7,8 @@
 
 import UIKit
 
+private let reuseIdentifier = "EditProfileCell"
+
 class EditProfileController: UITableViewController {
     // MARK: - Properties
     private let user: User
@@ -38,6 +40,7 @@ class EditProfileController: UITableViewController {
     // MARK: - API
     // MARK: - Helpers
     func configureNavigationBar() {
+        // Setting the appearance of NavigationBar in the Controller
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .twitterBlue
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
@@ -60,15 +63,39 @@ class EditProfileController: UITableViewController {
         tableView.tableHeaderView = headerView
         headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 180)
         tableView.tableFooterView = UIView()
-        
+        tableView.register(EditProfileCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.separatorStyle = .none
+        // Assigning HeaderView as a delegate for the Controller
         headerView.delegate = self
     }
 }
 
+// MARK: - EditProfileHeaderDelegate
 extension EditProfileController: EditProfileHeaderDelegate {
     func didTapChangeProfilePhoto() {
         print("DEBUG IT~S WORKING")
     }
-    
-    
 }
+
+//MARK: - UItableViewDataSource
+extension EditProfileController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return EditProfileOptions.allCases.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! EditProfileCell
+        return cell
+    }
+}
+
+// MARK: - UitableViewheightForRowAt
+extension EditProfileController {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let option = EditProfileOptions(rawValue: indexPath.row) else { return 0 }
+        return option == .bio ? 100 : 48
+    }
+}
+
+
+
