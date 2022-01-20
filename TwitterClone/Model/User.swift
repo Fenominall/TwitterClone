@@ -10,13 +10,14 @@ import Firebase
 
 struct User {
     let email: String
-    let fullname: String
-    let username: String
+    var fullname: String
+    var username: String
     var profileImageUrl: URL?
     let uid: String
     var isFollowed = false
     // It`s options because this properties will be available only after a user is fetched
     var stats: UserRelationStats?
+    var bio: String?
     
     // Checking if the user is the current user
     var isCurrentUser: Bool {
@@ -31,6 +32,7 @@ struct User {
         self.fullname = dictionary["fullname"] as? String ?? ""
         self.email = dictionary["email"] as? String ?? ""
         self.username = dictionary["username"] as? String ?? ""
+        self.bio = dictionary["bio"] as? String ?? ""
         
         if let profileImageUrlString = dictionary["profileImageUrl"] as? String {
             guard let url = URL(string: profileImageUrlString) else { return }

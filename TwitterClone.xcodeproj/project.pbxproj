@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3B64B7916D780C0B1873B03D /* Pods_TwitterClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9F0C2A699A9E1FAD3666953 /* Pods_TwitterClone.framework */; };
+		4F0D02482799E31B0042D804 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D02472799E31B0042D804 /* InputTextView.swift */; };
 		4F1128B6278CB2E50009C1BC /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1128B5278CB2E50009C1BC /* NotificationCell.swift */; };
 		4F1128B8278CC0A00009C1BC /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1128B7278CC0A00009C1BC /* NotificationsViewModel.swift */; };
 		4F1220F127981708002921BF /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1220F027981708002921BF /* EditProfileController.swift */; };
@@ -64,6 +65,7 @@
 /* Begin PBXFileReference section */
 		11D57413B372532034C4643E /* Pods-TwitterClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterClone.debug.xcconfig"; path = "Target Support Files/Pods-TwitterClone/Pods-TwitterClone.debug.xcconfig"; sourceTree = "<group>"; };
 		1ACE9853BF92C45C18702CCE /* Pods-TwitterClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterClone.release.xcconfig"; path = "Target Support Files/Pods-TwitterClone/Pods-TwitterClone.release.xcconfig"; sourceTree = "<group>"; };
+		4F0D02472799E31B0042D804 /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
 		4F1128B5278CB2E50009C1BC /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		4F1128B7278CC0A00009C1BC /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		4F1220F027981708002921BF /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			children = (
 				4FD6753B279891CE0091AA17 /* Profile */,
 				4F4D9456275D12FB00650A93 /* LaunchScreen.storyboard */,
+				4F0D02472799E31B0042D804 /* InputTextView.swift */,
 				4F713FCD276F75AA0060B893 /* CaptionTextView.swift */,
 				4F2B2DD1276FA5C80020F27A /* TweetCell.swift */,
 				4F2154A627788DF00067F35C /* UserCell.swift */,
@@ -476,6 +479,7 @@
 				4F4D9467275D13FB00650A93 /* MainTabController.swift in Sources */,
 				4F1EB5BE27772F27002C7C47 /* ProfileFilterCell.swift in Sources */,
 				4F4D944E275D12F900650A93 /* SceneDelegate.swift in Sources */,
+				4F0D02482799E31B0042D804 /* InputTextView.swift in Sources */,
 				4F992EC7278B54060077EE26 /* Notification.swift in Sources */,
 				4FB7F64D275D4FD0008F7AB7 /* FeedController.swift in Sources */,
 				4F62C7802763F1A200E08809 /* NSConstraintsExtension.swift in Sources */,

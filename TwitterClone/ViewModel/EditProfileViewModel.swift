@@ -21,3 +21,45 @@ enum EditProfileOptions: Int, CaseIterable {
         }
     }
 }
+
+struct EditProfileViewModel {
+    // MARK: - Properties
+    private let user: User
+    let option: EditProfileOptions
+    
+    var titleText: String {
+        return option.description
+    }
+    
+    var optionValue: String? {
+        switch option {
+        case .fullname:
+            return user.fullname
+        case .username:
+            return user.username
+        case .bio:
+            return user.bio
+        }
+    }
+    
+    // Hide TextField for a cell if option is "bio"
+    var shouldHideTextField: Bool {
+        return option == .bio
+    }
+    
+    // Hide TextView for a cell if option is not "bio"
+    var shouldHideTextView: Bool {
+        return option != .bio
+    }
+    
+    // Hiding text in a text view if user has bio
+    var shouldHidePlaceholderLabel: Bool {
+        return user.bio == nil
+    }
+    
+    // MARK: - Lifecycle
+    init(user: User, option: EditProfileOptions) {
+        self.user = user
+        self.option = option
+    }
+}

@@ -13,6 +13,12 @@ class EditProfileController: UITableViewController {
     // MARK: - Properties
     private let user: User
     private lazy var headerView = EditProfileHeader(user: user)
+    private let imagePicker = UIImagePickerController()
+    
+    // Set the selected image, once it selected,profileImageView will be updated
+    private var selectedImage: UIImage? {
+        didSet { headerView.profileImageView.image = selectedImage }
+    }
     
     // MARK: - Lifecycle
     init(user: User) {
@@ -28,6 +34,8 @@ class EditProfileController: UITableViewController {
         super.viewDidLoad()
         configureNavigationBar()
         configureTableView()
+        configureImagePicker()
+
     }
     // MARK: - Selectors
     @objc func handleCancel() {
@@ -68,12 +76,10 @@ class EditProfileController: UITableViewController {
         // Assigning HeaderView as a delegate for the Controller
         headerView.delegate = self
     }
-}
-
-// MARK: - EditProfileHeaderDelegate
-extension EditProfileController: EditProfileHeaderDelegate {
-    func didTapChangeProfilePhoto() {
-        print("DEBUG IT~S WORKING")
+    
+    func configureImagePicker() {
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
     }
 }
 
@@ -85,6 +91,8 @@ extension EditProfileController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! EditProfileCell
+        guard let option = EditProfileOptions(rawValue: indexPath.row) else { return cell }
+        cell.viewModel = EditProfileViewModel(user: user, option: option)
         return cell
     }
 }
@@ -98,4 +106,19 @@ extension EditProfileController {
 }
 
 
+// MARK: - EditProfileHeaderDelegate
+extension EditProfileController: EditProfileHeaderDelegate {
+    func didTapChangeProfilePhoto() {
+        present(imagePicker, animated: true, completion: nil)
+    }
+}
+
+extension EditProfileController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+        self.selectedImage = image
+        
+        dismiss(animated: true, completion: nil)
+    }
+}
 
