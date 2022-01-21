@@ -11,7 +11,7 @@ private let reuseIdentifier = "EditProfileCell"
 
 class EditProfileController: UITableViewController {
     // MARK: - Properties
-    private let user: User
+    private var user: User
     private lazy var headerView = EditProfileHeader(user: user)
     private let imagePicker = UIImagePickerController()
     
@@ -93,6 +93,7 @@ extension EditProfileController {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! EditProfileCell
         guard let option = EditProfileOptions(rawValue: indexPath.row) else { return cell }
         cell.viewModel = EditProfileViewModel(user: user, option: option)
+        cell.delegate = self
         return cell
     }
 }
@@ -122,3 +123,24 @@ extension EditProfileController: UIImagePickerControllerDelegate, UINavigationCo
     }
 }
 
+// MARK: - EditProfileCellDelegate˙
+extension EditProfileController: EditProfileCellDelegate {
+    func updateUserInfo(_ cell: EditProfileCell) {
+        guard let viewModel = cell.viewModel else { return }
+        // updating user info by switch options in EditProfileViewModel
+        switch viewModel.option {
+        case .fullname:
+            guard let fullname = cell.infoTextField.text else { return }
+            user.fullname = fullname
+        case .username:
+            guard let username = cell.infoTextField.text else { return }
+            user.username = username
+        case .bio:
+            // bio property is optional on the user and should not be unwrapped
+            user.bio = cell.bioTextView.text
+        }
+        print("DEBUG: USER FULL NAME IS \(user.fullname)")
+        print("DEBUG: USER USERNAME IS \(user.username)")
+        print("DEBUG: USER USERNAME IS \(String(describing: user.bio))")
+    }
+}
