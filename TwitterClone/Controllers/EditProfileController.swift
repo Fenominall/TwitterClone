@@ -9,11 +9,19 @@ import UIKit
 
 private let reuseIdentifier = "EditProfileCell"
 
+protocol EditProfileControllerDelegate: AnyObject {
+    func controller(_ controller: EditProfileController, wantsToUpdate user: User)
+}
+
 class EditProfileController: UITableViewController {
     // MARK: - Properties
     private var user: User
     private lazy var headerView = EditProfileHeader(user: user)
     private let imagePicker = UIImagePickerController()
+    // flag to activate Done button in the Editprofile after info changed
+    private var userInfoChanged = false
+    
+    weak var delegate: EditProfileControllerDelegate?
     
     // Set the selected image, once it selected,profileImageView will be updated
     private var selectedImage: UIImage? {
@@ -43,9 +51,18 @@ class EditProfileController: UITableViewController {
     }
     
     @objc func handleSaveData() {
-        
+        updateUserData()
     }
+    
     // MARK: - API
+    
+    func updateUserData() {
+        UserService.shared.updateUserData(user: user) { (error, reference) in
+            self.dismiss(animated: true, completion: nil)
+            self.delegate?.controller(self, wantsToUpdate: self.user)
+        }
+    }
+    
     // MARK: - Helpers
     func configureNavigationBar() {
         // Setting the appearance of NavigationBar in the Controller
@@ -98,15 +115,6 @@ extension EditProfileController {
     }
 }
 
-// MARK: - UitableViewheightForRowAt
-extension EditProfileController {
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let option = EditProfileOptions(rawValue: indexPath.row) else { return 0 }
-        return option == .bio ? 100 : 48
-    }
-}
-
-
 // MARK: - EditProfileHeaderDelegate
 extension EditProfileController: EditProfileHeaderDelegate {
     func didTapChangeProfilePhoto() {
@@ -123,10 +131,21 @@ extension EditProfileController: UIImagePickerControllerDelegate, UINavigationCo
     }
 }
 
+// MARK: - UitableViewheightForRowAt
+extension EditProfileController {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let option = EditProfileOptions(rawValue: indexPath.row) else { return 0 }
+        return option == .bio ? 100 : 48
+    }
+}
+
 // MARK: - EditProfileCellDelegate˙
 extension EditProfileController: EditProfileCellDelegate {
     func updateUserInfo(_ cell: EditProfileCell) {
         guard let viewModel = cell.viewModel else { return }
+        userInfoChanged = true
+        navigationItem.rightBarButtonItem?.isEnabled = true
+        
         // updating user info by switch options in EditProfileViewModel
         switch viewModel.option {
         case .fullname:
@@ -139,8 +158,5 @@ extension EditProfileController: EditProfileCellDelegate {
             // bio property is optional on the user and should not be unwrapped
             user.bio = cell.bioTextView.text
         }
-        print("DEBUG: USER FULL NAME IS \(user.fullname)")
-        print("DEBUG: USER USERNAME IS \(user.username)")
-        print("DEBUG: USER USERNAME IS \(String(describing: user.bio))")
     }
 }

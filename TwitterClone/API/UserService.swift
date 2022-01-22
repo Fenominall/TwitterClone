@@ -108,5 +108,21 @@ struct UserService {
         }
     }
     
+    /// Updating user data on the Database - "Fullname, Username, Bio"
+    func updateUserData(user: User, completion: @escaping (DatabaseCompletion)) {
+        // getting current user uid reference from the database
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        // constructing values into a dictionary
+        let values = ["fullname": user.fullname,
+                      "username": user.username,
+                      // Getting a bio default value cause it`s optional
+                      "bio": user.bio ?? ""]
+        // Accessing users structure in the database, finding current user by uid
+        REF_USERS.child(uid)
+            // updating current user structure with passed values
+            .updateChildValues(values,
+                               withCompletionBlock: completion)
+    }
+    
 }
 

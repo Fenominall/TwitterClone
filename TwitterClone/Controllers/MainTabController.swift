@@ -128,15 +128,13 @@ extension MainTabController {
         let navigationController = UINavigationController(rootViewController: rootViewController)
         navigationController.tabBarItem.image = image
         // NavBar appearance
-        navigationController.navigationBar.tintColor = .black
+//        navigationController.navigationBar.tintColor = .black
         navigationController.navigationBar.standardAppearance = appearance
         navigationController.navigationBar.compactAppearance = appearance
         navigationController.navigationBar.scrollEdgeAppearance = appearance
-        navigationController.navigationBar.backgroundColor = .white
+        navigationController.navigationBar.barStyle = .black
         navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-//                navigationController.navigationBar.prefersLargeTitles = true
         
         return navigationController
     }
 }
-

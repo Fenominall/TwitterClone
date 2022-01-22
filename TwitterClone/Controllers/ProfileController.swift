@@ -189,6 +189,7 @@ extension ProfileController: ProfileHeaderViewDelegate {
         //  if user.isCurrentUser then do not create following structure and just return
         if user.isCurrentUser {
             let editProfileController = EditProfileController(user: user)
+            editProfileController.delegate = self
             let nav = UINavigationController(rootViewController: editProfileController)
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true, completion: nil)
@@ -214,5 +215,16 @@ extension ProfileController: ProfileHeaderViewDelegate {
     
     func handleDismissal() {
         navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: - EditProfileControllerDelegate
+extension ProfileController: EditProfileControllerDelegate {
+    func controller(_ controller: EditProfileController, wantsToUpdate user: User) {
+        controller.dismiss(animated: true, completion: nil)
+        // reseting user data with received values from EditprofileController
+        self.user = user
+        // reloading collectionView to display updated data
+        self.collectionView.reloadData()
     }
 }
