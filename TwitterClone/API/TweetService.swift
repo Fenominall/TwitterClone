@@ -115,7 +115,7 @@ struct TweetService {
         REF_TWEETS.child(tweetID).observeSingleEvent(of: .value) { snapshot in
             guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
             guard let uid = dictionary["uid"] as? String else { return }
-            UserService.shared.fetchUser(uid: uid) { user in
+            UserService.shared.fetchUser(byUid: uid) { user in
                 // Creating a tweet with the received data
                 // Because a user reference is used to create a tweet I will be able to use user data for tweets
                 let tweet = Tweet(user: user,tweetID: tweetID, dictionary:  dictionary)
@@ -145,7 +145,7 @@ struct TweetService {
                     // Getting uid of a reply
                     let replyID = snapshot.key
                     // Fetching all tweets in "tweet-replies" by provided user uid
-                    UserService.shared.fetchUser(uid: uid) { user in
+                    UserService.shared.fetchUser(byUid: uid) { user in
                         // Creating-a new tweet
                         let reply = Tweet(user: user,
                                           tweetID: replyID,
@@ -170,7 +170,7 @@ struct TweetService {
             // getting a replied tweet UID reference
             guard let uid = dictionary["uid"] as? String else { return }
             
-            UserService.shared.fetchUser(uid: uid) { user in
+            UserService.shared.fetchUser(byUid: uid) { user in
                 let tweet = Tweet(user: user, tweetID: tweetID, dictionary: dictionary)
                 tweets.append(tweet)
                 completion(tweets)

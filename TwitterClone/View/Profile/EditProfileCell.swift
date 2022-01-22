@@ -48,6 +48,9 @@ class EditProfileCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        infoTextField.delegate = self
+        bioTextView.delegate = self
+        
         selectionStyle = .none
         
         contentView.addSubview(titleLabel)
@@ -70,7 +73,7 @@ class EditProfileCell: UITableViewCell {
                      bottom: bottomAnchor,
                      right: rightAnchor,
                      paddingTop: 4,
-                     paddingLeft: 16,
+                     paddingLeft: 10,
                      paddingRight: 8)
         
         NotificationCenter.default.addObserver(self,
@@ -103,5 +106,18 @@ class EditProfileCell: UITableViewCell {
         
         bioTextView.placeholderLabel.isHidden = viewModel.shouldHidePlaceholderLabel
         bioTextView.text = viewModel.optionValue
+    }
+}
+
+extension EditProfileCell: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
+    }
+}
+
+
+extension EditProfileCell: UITextViewDelegate {
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        return textView.resignFirstResponder()
     }
 }

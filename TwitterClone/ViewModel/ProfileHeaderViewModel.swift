@@ -62,6 +62,10 @@ struct ProfileHeaderViewModel {
         "@\(user.username)"
     }
     
+    var userBio: String {
+        return user.bio ?? ""
+    }
+    
     init(user: User) {
         self.user = user
     }

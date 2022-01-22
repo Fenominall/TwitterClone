@@ -29,6 +29,8 @@ let REF_TWEET_LIKES = DB_REF.child("tweet-likes")
 let REF_NOTIFICATIONS = DB_REF.child("notifications")
 // Creating a new structure for user-replies
 let REF_USER_REPLIES = DB_REF.child("user-replies")
+// User-usernames
+let REF_USERS_USERNAMES = DB_REF.child("users-usernames")
 
 // Creating storage reference for images
 let STORAGE_REF = Storage.storage().reference()

@@ -20,6 +20,10 @@ class EditProfileController: UITableViewController {
     private let imagePicker = UIImagePickerController()
     // flag to activate Done button in the Editprofile after info changed
     private var userInfoChanged = false
+    // if selected image has a value userImageChanged values will be set to true
+    private var userImageChanged: Bool {
+        return selectedImage != nil
+    }
     
     weak var delegate: EditProfileControllerDelegate?
     
@@ -51,14 +55,35 @@ class EditProfileController: UITableViewController {
     }
     
     @objc func handleSaveData() {
+        guard userImageChanged || userInfoChanged else { return }
         updateUserData()
     }
     
     // MARK: - API
     
     func updateUserData() {
-        UserService.shared.updateUserData(user: user) { (error, reference) in
-            self.dismiss(animated: true, completion: nil)
+        
+        if userImageChanged && !userInfoChanged {
+            updateProfileImage()
+        }
+        
+        if userInfoChanged && !userImageChanged {
+            UserService.shared.updateUserData(user: user) { (error, reference) in
+                self.delegate?.controller(self, wantsToUpdate: self.user)
+            }
+        }
+        
+        if userInfoChanged && userImageChanged {
+            UserService.shared.updateUserData(user: user) { (error, reference) in
+                self.updateProfileImage()
+            }
+        }
+    }
+    
+    func updateProfileImage() {
+        guard let image = selectedImage else { return }
+        UserService.shared.updateUserProfileImage(image: image) { profileImageUrl in
+            self.user.profileImageUrl = profileImageUrl
             self.delegate?.controller(self, wantsToUpdate: self.user)
         }
     }
@@ -81,7 +106,6 @@ class EditProfileController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleSaveData))
-        navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
     func configureTableView() {
@@ -158,5 +182,11 @@ extension EditProfileController: EditProfileCellDelegate {
             // bio property is optional on the user and should not be unwrapped
             user.bio = cell.bioTextView.text
         }
+    }
+}
+
+extension EditProfileController {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }

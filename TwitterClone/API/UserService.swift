@@ -14,19 +14,19 @@ typealias DatabaseCompletion = ((Error?, DatabaseReference) -> Void)
 struct UserService {
     static let shared = UserService()
     
-    func fetchUser(uid: String, completion: @escaping (User) -> Void) {
+    func fetchUser(byUid: String, completion: @escaping (User) -> Void) {
         // Getting users` references to find to current user`s uid
         // guard let uid = Auth.auth().currentUser?.uid else { return }
         
         // Make API call to get user data by uid
-        REF_USERS.child(uid).observeSingleEvent(of: .value) { snapShoot in
+        REF_USERS.child(byUid).observeSingleEvent(of: .value) { snapShoot in
             
             // Cast received from snapshoot(uid) information to convert it into dictionary format,
             // to construct a UserModel
             guard let userDataDictionary = snapShoot.value as? [String: AnyObject] else { return }
             
             // Creating custom user object
-            let user = User(uid: uid, dictionary: userDataDictionary)
+            let user = User(uid: byUid, dictionary: userDataDictionary)
             completion(user)
         }
     }
@@ -124,5 +124,37 @@ struct UserService {
                                withCompletionBlock: completion)
     }
     
+    /// Updating userProfileImage on the Database
+    func updateUserProfileImage(image: UIImage, completion: @escaping (URL?) -> Void) {
+        guard let imageData = image.jpegData(compressionQuality: 0.3) else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        // Giving an uploaded image unique uid
+        let filename = NSUUID().uuidString
+        // Accessing the database structure where ImageData will be stored
+        let ref = STORAGE_PROFILE_IMAGES.child(filename)
+        // Putting an image to the Image Storage
+        ref.putData(imageData, metadata: nil) { (meta, error) in
+            // After an image was uploaded, getting a url to an image in Image Storage
+            ref.downloadURL { (url, error) in
+                // creating absolute url for an image
+                guard let profileImageUrl = url?.absoluteString else { return }
+                // creating a value of profileImageUrl
+                let values = ["profileImageUrl": profileImageUrl]
+                // accessing "users" structure and updating current user profile with the received values
+                REF_USERS.child(uid).updateChildValues(values) { (error, reference) in
+                    completion(url)
+                }
+            }
+        }
+    }
+    
+    func fetchUser(withUsername username: String, completion: @escaping (User) -> Void) {
+        REF_USERS_USERNAMES.child(username).observeSingleEvent(of: .value) { snapshot in
+            // getting a user uid as a string value
+            guard let uid = snapshot.value as? String else { return }
+            // fetching a user by uid
+            self.fetchUser(byUid: uid, completion: completion)
+        }
+    }
 }
 

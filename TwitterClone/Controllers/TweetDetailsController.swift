@@ -47,7 +47,6 @@ class TweetDetailsController: UICollectionViewController {
     
     // MARK: - API
     func fetchReplies() {
-        print("DEBUG: Tweet caption is \(tweet.tweetID)")
         TweetService.shared.fetchTweetsReplies(forTweet: tweet) { replies in
             self.repliedTweets = replies
         }
@@ -113,6 +112,13 @@ extension TweetDetailsController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - TweetHeaderDelegate
 extension TweetDetailsController: TweetHeaderDelegate {
+    func handleFetchUser(withUsername username: String) {
+        UserService.shared.fetchUser(withUsername: username) { [weak self] user in
+            let controller = ProfileController(user: user)
+            self?.navigationController?.pushViewController(controller, animated: true)
+        }
+    }
+    
 
     func showActionSheet() {
         if tweet.user.isCurrentUser {

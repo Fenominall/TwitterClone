@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import ActiveLabel
 
 protocol TweetCellDelegate: AnyObject {
     func handleProfileImageTapped(_ cell: TweetCell)
     func handleReplyTapped(_ cell: TweetCell)
     func handleLikeTapped(_ cell: TweetCell)
+    func handleFetchUser(withUsername username: String)
 }
 
 class TweetCell: UICollectionViewCell {
@@ -37,17 +39,20 @@ class TweetCell: UICollectionViewCell {
         return imageView
     }()
     
-    private let replyLabel: UILabel = {
-        let label = UILabel()
+    private let replyLabel: ActiveLabel = {
+        let label = ActiveLabel()
         label.textColor = .lightGray
+        label.mentionColor = (.twitterBlue ?? .lightGray)
         label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
     
-    private let captionLabel: UILabel = {
-        let label = UILabel()
+    private let captionLabel: ActiveLabel = {
+        let label = ActiveLabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.numberOfLines = 0
+        label.mentionColor = (.twitterBlue ?? .lightGray)
+        label.hashtagColor = (.twitterBlue ?? .lightGray)
         return label
     }()
     
@@ -164,6 +169,8 @@ class TweetCell: UICollectionViewCell {
                            paddingBottom: 16,
                            paddingRight: 45)
         actionStack.centerX(inView: self)
+        // When user taps on mention will be redirected to a profile of a tapped username
+        configureMentionHandler()
     }
     
     required init?(coder: NSCoder) {
@@ -206,5 +213,14 @@ class TweetCell: UICollectionViewCell {
         
         replyLabel.isHidden = tweetViewModel.shouldHideReplyLabel
         replyLabel.text = tweetViewModel.whoRepliedText
+    }
+    
+    func configureMentionHandler() {
+        captionLabel.handleMentionTap { [weak self] username in
+            self?.delegate?.handleFetchUser(withUsername: username)
+        }
+        replyLabel.handleMentionTap { [weak self] username in
+            self?.delegate?.handleFetchUser(withUsername: username)
+        }
     }
 }

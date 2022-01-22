@@ -54,7 +54,7 @@ struct EditProfileViewModel {
     
     // Hiding text in a text view if user has bio
     var shouldHidePlaceholderLabel: Bool {
-        return user.bio == nil
+        return user.bio != nil
     }
     
     // MARK: - Lifecycle

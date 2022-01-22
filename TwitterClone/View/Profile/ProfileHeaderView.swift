@@ -79,7 +79,6 @@ class ProfileHeaderView: UICollectionReusableView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.numberOfLines = 3
-        label.text = "init(coder:) has not been implemented init(coder:) has not been"
         return label
     }()
     
@@ -189,7 +188,7 @@ class ProfileHeaderView: UICollectionReusableView {
         editProfileFollowButton.setTitle(profileViewModel.actionButtonTitle, for: .normal)
         followingLabel.attributedText = profileViewModel.followingString
         followersLabel.attributedText = profileViewModel.followersString
-        
+        bioLableL.text = profileViewModel.userBio
         fullnameLabel.text = profileViewModel.fullName
         usernameLabel.text = profileViewModel.username
     }

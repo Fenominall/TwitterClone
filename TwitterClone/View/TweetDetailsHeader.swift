@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import ActiveLabel
 
 protocol TweetHeaderDelegate: AnyObject {
     func showActionSheet()
+    func handleFetchUser(withUsername username: String)
 }
 
 class TweetDetailsHeader: UICollectionReusableView {
@@ -34,10 +36,11 @@ class TweetDetailsHeader: UICollectionReusableView {
         return imageView
     }()
     
-    private let replyLabel: UILabel = {
-        let label = UILabel()
+    private let replyLabel: ActiveLabel = {
+        let label = ActiveLabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .lightGray
+        label.mentionColor = (.twitterBlue ?? .lightGray)
         return label
     }()
     
@@ -47,17 +50,19 @@ class TweetDetailsHeader: UICollectionReusableView {
         return label
     }()
     
-    private lazy var usernameLabel: UILabel = {
-        let label = UILabel()
+    private lazy var usernameLabel: ActiveLabel = {
+        let label = ActiveLabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .lightGray
+        label.mentionColor = (.twitterBlue ?? .lightGray)
         return label
     }()
     
-    private lazy var captionLabel: UILabel = {
-        let label = UILabel()
+    private lazy var captionLabel: ActiveLabel = {
+        let label = ActiveLabel()
         label.font = UIFont.systemFont(ofSize: 20)
         label.numberOfLines = 0
+        label.mentionColor = (.twitterBlue ?? .lightGray)
         return label
     }()
     
@@ -233,6 +238,8 @@ class TweetDetailsHeader: UICollectionReusableView {
         actionsStack.anchor(top: statsView.bottomAnchor,
                             paddingTop: 12,
                             paddingBottom: 12)
+        
+        configureMentionHandler()
     }
     
     func createButton(withImageName imageName: UIImage) -> UIButton {
@@ -261,5 +268,14 @@ class TweetDetailsHeader: UICollectionReusableView {
         // Showing a username to whom reply was addressed
         replyLabel.text = tweetViewModel.whoRepliedText
         replyLabel.isHidden = tweetViewModel.shouldHideReplyLabel
+    }
+    
+    func configureMentionHandler() {
+        captionLabel.handleMentionTap { [weak self] username in
+            self?.delegate?.handleFetchUser(withUsername: username)
+        }
+        usernameLabel.handleMentionTap {[weak self] username in
+            self?.delegate?.handleFetchUser(withUsername: username)
+        }
     }
 }

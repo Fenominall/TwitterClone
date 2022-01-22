@@ -7,6 +7,7 @@
 
 import UIKit
 import Foundation
+import ActiveLabel
 
 class UploadTweetsController: UIViewController {
     
@@ -41,10 +42,12 @@ class UploadTweetsController: UIViewController {
         return imageView
     }()
     
-    private lazy var replyLabel: UILabel = {
-        let label = UILabel()
+    // Special active label that can shown different color and can have a tappable possibility
+    private lazy var replyLabel: ActiveLabel = {
+        let label = ActiveLabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .lightGray
+        label.mentionColor = (.twitterBlue ?? .lightGray)
         label.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         return label
     }()
@@ -75,7 +78,6 @@ class UploadTweetsController: UIViewController {
         super.viewDidLoad()
         configureUI()
         configureUIComponents()
-        
     }
     
     // MARK: - Selectors
@@ -88,6 +90,7 @@ class UploadTweetsController: UIViewController {
         // Guard checks if captionTextView has text and then uploads tweet to a database if it`s successful.
         guard let caption = captionTextView.text else { return }
         TweetService.shared.uploadTweet(caption: caption, type: tweetConfig) { [weak self] (error, reference) in
+            // reference is reference to the tweet
             if let error = error {
                 print("DEBUG: Failed to upload a tweet with error: \(error.localizedDescription)")
                 return
@@ -96,14 +99,40 @@ class UploadTweetsController: UIViewController {
             // Check if the state is in the reply configuration to get access to tweet properties
             if case .reply(let tweet) = self?.tweetConfig {
                 // Uploading notification to notify the user about reply on the tweet
-                NotificationService.shared.uploadNotification(type: .reply, tweet: tweet)
+                NotificationService.shared.uploadNotification(toUser: tweet.user,
+                                                              type: .reply,
+                                                              tweetID: tweet.tweetID)
             }
+            // if a tweet was replied the user will get mentioned notification
+            self?.uploadMentionedNotification(forCaption: caption, tweetID: reference.key)
             // After tweet is successfully uploaded navigation-controller dismiss the current view to controller
             self?.dismiss(animated: true, completion: nil)
         }
     }
-    
+
     // MARK: - API
+    
+    private func uploadMentionedNotification(forCaption caption: String, tweetID: String?) {
+        // checking if caption has @
+        guard caption.contains("@") else { return }
+        // deciding caption array of words with whitespacesAndNewlines
+        let words = caption.components(separatedBy: .whitespacesAndNewlines)
+        // iterating over each word
+        words.forEach { word in
+            // checking if a word has "@" mentioned prefix
+            guard word.hasPrefix("@") else { return }
+            
+            var username = word.trimmingCharacters(in: .symbols)
+            username = username.trimmingCharacters(in: .punctuationCharacters)
+            // Fetching a  mentioned user by username in users-usernames structure where it gets fetched user`s uid and gets reference to the actual user structure
+            UserService.shared.fetchUser(withUsername: username) { mentioned in
+                // Uploading mention notification to notify the mentioned user about actions provided on his profile
+                NotificationService.shared.uploadNotification(toUser: mentioned,
+                                                              type: .mention,
+                                                              tweetID: tweetID)
+            }
+        }
+    }
     
     // MARK: - Helpers
     private func configureUI() {
@@ -143,5 +172,5 @@ class UploadTweetsController: UIViewController {
         // Right bar button item to upload tweet
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: actionButton)
     }
-    
 }
+
