@@ -51,7 +51,7 @@
 		4FB35AB92764B4110021F277 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB35AB82764B4110021F277 /* Utilities.swift */; };
 		4FB35ABB2764E4960021F277 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FB35ABA2764E4960021F277 /* GoogleService-Info.plist */; };
 		4FB7F64D275D4FD0008F7AB7 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F64C275D4FD0008F7AB7 /* FeedController.swift */; };
-		4FB7F64F275D501B008F7AB7 /* ExploreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F64E275D501B008F7AB7 /* ExploreController.swift */; };
+		4FB7F64F275D501B008F7AB7 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F64E275D501B008F7AB7 /* SearchController.swift */; };
 		4FB7F651275D5049008F7AB7 /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F650275D5049008F7AB7 /* NotificationsController.swift */; };
 		4FB7F653275D506D008F7AB7 /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F652275D506D008F7AB7 /* ConversationsController.swift */; };
 		4FB7F656275D533D008F7AB7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7F655275D533D008F7AB7 /* Constants.swift */; };
@@ -111,7 +111,7 @@
 		4FB35AB82764B4110021F277 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		4FB35ABA2764E4960021F277 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		4FB7F64C275D4FD0008F7AB7 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
-		4FB7F64E275D501B008F7AB7 /* ExploreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreController.swift; sourceTree = "<group>"; };
+		4FB7F64E275D501B008F7AB7 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		4FB7F650275D5049008F7AB7 /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
 		4FB7F652275D506D008F7AB7 /* ConversationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsController.swift; sourceTree = "<group>"; };
 		4FB7F655275D533D008F7AB7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -205,7 +205,7 @@
 				4F86DC8027649D86004FFB5A /* Authentication */,
 				4F4D9466275D13FB00650A93 /* MainTabController.swift */,
 				4FB7F64C275D4FD0008F7AB7 /* FeedController.swift */,
-				4FB7F64E275D501B008F7AB7 /* ExploreController.swift */,
+				4FB7F64E275D501B008F7AB7 /* SearchController.swift */,
 				4FB7F650275D5049008F7AB7 /* NotificationsController.swift */,
 				4FB7F652275D506D008F7AB7 /* ConversationsController.swift */,
 				4F1CAF4F276D21160034EBA3 /* UploadTweetsController.swift */,
@@ -473,7 +473,7 @@
 				4F4D944C275D12F900650A93 /* AppDelegate.swift in Sources */,
 				4F4EE53727725B10002DC666 /* ProfileController.swift in Sources */,
 				4F363C7827711621002B889F /* TweetViewModel.swift in Sources */,
-				4FB7F64F275D501B008F7AB7 /* ExploreController.swift in Sources */,
+				4FB7F64F275D501B008F7AB7 /* SearchController.swift in Sources */,
 				4F2154A727788DF00067F35C /* UserCell.swift in Sources */,
 				4F1EB5BC27772B54002C7C47 /* ProfileFilterView.swift in Sources */,
 				4F86DC7F27649B47004FFB5A /* AppColors.swift in Sources */,

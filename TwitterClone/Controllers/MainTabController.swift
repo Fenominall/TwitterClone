@@ -8,15 +8,24 @@
 import UIKit
 import Firebase
 
+// enum for action on a selected VC
+enum ActionButtonConfiguration {
+    // action will be provided on all VController except ConversationVC
+    case tweet
+    // Action on a ConversationVC will be provided
+    case message
+}
+
 class MainTabController: UITabBarController {
     
     // MARK: - Properties
+    
+    private var buttonConfig: ActionButtonConfiguration = .tweet
     
     var user: User? {
         didSet {
             guard let nav = viewControllers?[0] as? UINavigationController else { return }
             guard let feed = nav.viewControllers.first as? FeedController else { return }
-            
             feed.user = user
         }
     }
@@ -40,20 +49,26 @@ class MainTabController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .twitterBlue
-//        logUserOut()
-        
         authenticateUserAndConfigureUI()
     }
     
     
     // MARK: - Selectors
     @objc func actionButtonTapped() {
+        
+        let controller: UIViewController
         guard let user = user else { return }
         
-        let uploadTweetController = UploadTweetsController(user: user, config: .tweet)
-        let uploadTweetNav = UINavigationController(rootViewController: uploadTweetController)
-        uploadTweetNav.modalPresentationStyle = .fullScreen
-        present(uploadTweetNav, animated: true, completion: nil)
+        switch buttonConfig {
+        case .tweet:
+           controller = UploadTweetsController(user: user, config: .tweet)
+        case .message:
+            controller = SearchController(configOption: .messages)
+        }
+        
+        let selectedVC = UINavigationController(rootViewController: controller)
+        selectedVC.modalPresentationStyle = .fullScreen
+        present(selectedVC, animated: true, completion: nil)
     }
     
     // MARK: - API
@@ -96,13 +111,15 @@ class MainTabController: UITabBarController {
     }
     
     func configureViewControllers() {
+        // marking MainTabBarController as a self delegate
+        self.delegate = self
         // TabBar appearance
         tabBar.backgroundColor = .white
         // Settings View Controllers in TabBar
         let feedNavController = templateNavigationController(image: Constants.homeImage,
                                                              rootViewController: FeedController(collectionViewLayout: UICollectionViewFlowLayout()))
         let exploreNavController = templateNavigationController(image: Constants.exploreImage,
-                                                                rootViewController: ExploreController())
+                                                                rootViewController: SearchController(configOption: .userSearch))
         let notificationsNavController = templateNavigationController(image: Constants.notificationsImage,
                                                                       rootViewController: NotificationsController())
         let conversationsNavController = templateNavigationController(image: Constants.feedImage,
@@ -128,7 +145,7 @@ extension MainTabController {
         let navigationController = UINavigationController(rootViewController: rootViewController)
         navigationController.tabBarItem.image = image
         // NavBar appearance
-//        navigationController.navigationBar.tintColor = .black
+        navigationController.navigationBar.tintColor = .black
         navigationController.navigationBar.standardAppearance = appearance
         navigationController.navigationBar.compactAppearance = appearance
         navigationController.navigationBar.scrollEdgeAppearance = appearance
@@ -139,3 +156,17 @@ extension MainTabController {
     }
 }
 
+// implementing state switch for an action button on the MainTabBar
+// if a conversation VC selected the enveloper icon will be shown
+// else a regular add icon will be shown
+extension MainTabController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        // getting the index of a selected VC
+        let indexOfVC = viewControllers?.firstIndex(of: viewController)
+        // Changing the image based on selected VC state
+        let actionButtonImage = indexOfVC == 3 ? Constants.mailImage : Constants.newTweetImage
+        // setting the image to the action button
+        actionButton.setImage(actionButtonImage, for: .normal)
+        buttonConfig = indexOfVC == 3 ? .message : .tweet
+    }
+}
