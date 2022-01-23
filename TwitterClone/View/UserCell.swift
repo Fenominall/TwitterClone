@@ -65,6 +65,14 @@ class UserCell: UITableViewCell {
                           paddingLeft: 12)
     }
     
+    func createButton(withImageName imageName: UIImage) -> UIButton {
+        let button = UIButton(type: .system)
+        button.setImage(imageName, for: .normal)
+        button.tintColor = .darkGray
+        button.setDimensions(width: 20, height: 20)
+        return button
+    }
+    
     func configure() {
         guard let user = user else { return }
         

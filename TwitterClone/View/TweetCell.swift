@@ -77,37 +77,25 @@ class TweetCell: UICollectionViewCell {
     }()
     
     private lazy var commentButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(Constants.commentsImage, for: .normal)
-        button.tintColor = .darkGray
-        button.setDimensions(width: 20, height: 20)
+        let button = createButton(withImageName: Constants.commentsImage)
         button.addTarget(self, action: #selector(handleCommentTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var retweetButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(Constants.retweetImage, for: .normal)
-        button.tintColor = .darkGray
-        button.setDimensions(width: 20, height: 20)
+        let button = createButton(withImageName: Constants.retweetImage)
         button.addTarget(self, action: #selector(handleRetweetTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var likeButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(Constants.likeImage, for: .normal)
-        button.tintColor = .darkGray
-        button.setDimensions(width: 20, height: 20)
+        let button = createButton(withImageName: Constants.likeImage)
         button.addTarget(self, action: #selector(handleLikeTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var shareButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.tintColor = .darkGray
-        button.setImage(Constants.shareImage, for: .normal)
-        button.setDimensions(width: 20, height: 20)
+        let button = createButton(withImageName: Constants.shareImage)
         button.addTarget(self, action: #selector(handleShareTapped), for: .touchUpInside)
         return button
     }()
@@ -214,7 +202,7 @@ class TweetCell: UICollectionViewCell {
         replyLabel.isHidden = tweetViewModel.shouldHideReplyLabel
         replyLabel.text = tweetViewModel.whoRepliedText
     }
-    
+
     func configureMentionHandler() {
         captionLabel.handleMentionTap { [weak self] username in
             self?.delegate?.handleFetchUser(withUsername: username)
@@ -223,4 +211,14 @@ class TweetCell: UICollectionViewCell {
             self?.delegate?.handleFetchUser(withUsername: username)
         }
     }
+    
+    
+    func createButton(withImageName imageName: UIImage) -> UIButton {
+        let button = UIButton(type: .system)
+        button.setImage(imageName, for: .normal)
+        button.tintColor = .darkGray
+        button.setDimensions(width: 20, height: 20)
+        return button
+    }
+    
 }

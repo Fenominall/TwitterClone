@@ -17,6 +17,7 @@ class EditProfileController: UITableViewController {
     // MARK: - Properties
     private var user: User
     private lazy var headerView = EditProfileHeader(user: user)
+    private let footerView = EditProfileFooter()
     private let imagePicker = UIImagePickerController()
     // flag to activate Done button in the Editprofile after info changed
     private var userInfoChanged = false
@@ -109,13 +110,17 @@ class EditProfileController: UITableViewController {
     }
     
     func configureTableView() {
+        tableView.register(EditProfileCell.self, forCellReuseIdentifier: reuseIdentifier)
+        
         tableView.tableHeaderView = headerView
         headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 180)
-        tableView.tableFooterView = UIView()
-        tableView.register(EditProfileCell.self, forCellReuseIdentifier: reuseIdentifier)
-        tableView.separatorStyle = .none
-        // Assigning HeaderView as a delegate for the Controller
         headerView.delegate = self
+        
+        tableView.separatorStyle = .none
+        footerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 100)
+        footerView.delegate = self
+        
+        tableView.tableFooterView = footerView
     }
     
     func configureImagePicker() {
@@ -185,8 +190,10 @@ extension EditProfileController: EditProfileCellDelegate {
     }
 }
 
-extension EditProfileController {
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+extension EditProfileController: EditProfileFooterDelegate {
+    func handleLogOut() {
+        print("DEBUG: Handle LOG OUT...")
     }
+    
+    
 }

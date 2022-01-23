@@ -142,7 +142,6 @@ class TweetDetailsHeader: UICollectionReusableView {
         return button
     }()
     
-    
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
