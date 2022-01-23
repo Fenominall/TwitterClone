@@ -44,12 +44,13 @@ class NotificationsController: UITableViewController {
         refreshControl?.beginRefreshing()
         // Fetching for all user`s notifications
         NotificationService.shared.fetchNotifications { [weak self] notifications in
+            print("DEBUG NO Notifications")
+            // Once data received refresh control stops refreshing
+            self?.refreshControl?.endRefreshing()
             // assigning the values to be stored in notifications array to be used further
             self?.notifications = notifications
             // checking if a user is follow to display a correct-label for follow button
             self?.checkIfUserIsFollowed(notifications: notifications)
-            // Once data received refresh control stops refreshing
-            self?.refreshControl?.endRefreshing()
         }
         // If user does not have notification yet, refreshControl ends.
         refreshControl?.endRefreshing()
@@ -57,14 +58,18 @@ class NotificationsController: UITableViewController {
     
     /// logic to determine if user is followed or not to display the correct followButton`s label text
     func checkIfUserIsFollowed(notifications: [Notification]) {
-        for (index, notification) in notifications.enumerated() {
+        // checking if notifications array is empty
+        guard !notifications.isEmpty else { return }
+        
+        notifications.forEach { notification in
             // check to see if type of notification is .follow
-            if case .follow = notification.type {
-                // getting a user from a notification
-                let user = notification.user
-                // Checking on the database if a user if follower or not
-                UserService.shared.checkIfUserIsFollowing(uid: user.uid) { isFollowed in
-                    // getting index of a correct data source by it`s index
+            guard case .follow = notification.type else { return }
+            // getting a user from a notification
+            let user = notification.user
+            // Checking on the database if a user is followed or not
+            UserService.shared.checkIfUserIsFollowed(uid: user.uid) { isFollowed in
+                // getting the index of a looked notification as a data source by it`s index
+                if let index = self.notifications.firstIndex(where: { $0.user.uid == notification.user.uid }) {
                     // updating tableView dataSource by user [index]
                     self.notifications[index].user.isFollowed = isFollowed
                 }

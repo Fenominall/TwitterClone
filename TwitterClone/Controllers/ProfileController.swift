@@ -5,16 +5,21 @@
 //  Created by Fenominall on 12/21/21.
 //
 
-import Foundation
+import Firebase
 import UIKit
 
 private let reuseIdentifier = "TweetCell"
 private let headerReuseIdentified = "ProfileHeader"
 
+//protocol ProfileControllerDelegate: AnyObject {
+//    func handleLogOut()
+//}
+
 class ProfileController: UICollectionViewController {
     
     // MARK: - Properties
     private var user: User
+//    weak var delegate: ProfileControllerDelegate?
     
     // A default value is tweets because it always starts from tweets in ProfileController
     private var selectedFilter: ProfileFilterOptions = .tweets {
@@ -74,7 +79,7 @@ class ProfileController: UICollectionViewController {
     }
     
     func checkIfUserIsFollowed() {
-        UserService.shared.checkIfUserIsFollowing(uid: user.uid) { [weak self] isFollowed in
+        UserService.shared.checkIfUserIsFollowed(uid: user.uid) { [weak self] isFollowed in
             self?.user.isFollowed = isFollowed
             self?.collectionView.reloadData()
         }
@@ -235,5 +240,16 @@ extension ProfileController: EditProfileControllerDelegate {
         self.user = user
         // reloading collectionView to display updated data
         self.collectionView.reloadData()
+    }
+    
+    func handleLogOut() {
+        do {
+            try Auth.auth().signOut()
+            let nav = UINavigationController(rootViewController: LoginController())
+            nav.modalPresentationStyle = .fullScreen
+            present(nav, animated: true, completion: nil)
+        } catch let error {
+            print("DEBUG: Error occurred when tried to log our the user \(error.localizedDescription)")
+        }
     }
 }

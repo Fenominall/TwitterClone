@@ -79,7 +79,7 @@ struct UserService {
             }
     }
     
-    func checkIfUserIsFollowing(uid: String, completion: @escaping (Bool) -> Void) {
+    func checkIfUserIsFollowed(uid: String, completion: @escaping (Bool) -> Void) {
         // getting a currentUser logged in user uid
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         // Check if selected user uid is already added to currentUser uid "user-following" structure

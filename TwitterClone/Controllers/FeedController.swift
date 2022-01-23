@@ -5,7 +5,7 @@
 //  Created by Fenominall on 12/5/21.
 //
 
-import Foundation
+import Firebase
 import UIKit
 
 private let reuseIdentifier = "TweetCell"
@@ -39,6 +39,14 @@ class FeedController: UICollectionViewController {
     // MARK: - Selectors
     @objc private func handleRefresh() {
         fetchTweets()
+    }
+    
+    @objc private func openUserProfile() {
+        // getting the user values and checking that it is not nil
+        guard let user = user else { return }
+        // pushing the user to ProfileVC
+        let userProfileVC = ProfileController(user: user)
+        navigationController?.pushViewController(userProfileVC, animated: true)
     }
     
     // MARK: - API
@@ -95,7 +103,9 @@ class FeedController: UICollectionViewController {
         profileImageView.setDimensions(width: 32, height: 32)
         profileImageView.layer.cornerRadius = 32 / 2
         profileImageView.layer.masksToBounds = true
-        
+        profileImageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(openUserProfile))
+        profileImageView.addGestureRecognizer(tap)
         // Downloading an image from url to set it for profileImageView
         ImageService.shared.downloadAndSetImage(with: user.profileImageUrl, for: profileImageView)
         
@@ -175,7 +185,6 @@ extension FeedController: TweetCellDelegate {
         let uploadTweetNav = UINavigationController(rootViewController: controller)
         uploadTweetNav.modalPresentationStyle = .fullScreen
         present(uploadTweetNav, animated: true, completion: nil)
-        
     }
     
     func handleProfileImageTapped(_ cell: TweetCell) {
@@ -184,6 +193,4 @@ extension FeedController: TweetCellDelegate {
         let profileController = ProfileController(user: user)
         navigationController?.pushViewController(profileController, animated: true)
     }
-    
-    
 }
