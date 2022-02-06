@@ -18,7 +18,6 @@ protocol ActionSheetLauncherDelegate: AnyObject {
 class ActionSheetLauncher: NSObject {
     
     // MARK: - Properties
-
     
     private let user: User
     // Make the property lazy to use actionSheetViewModel only when user is initialized
